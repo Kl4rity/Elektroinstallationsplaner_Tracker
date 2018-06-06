@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     lsDummyData = [{
         name : "Erdgeschoss"
         , floor_count_from_basement : 1
