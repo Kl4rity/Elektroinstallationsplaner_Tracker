@@ -1,39 +1,40 @@
-var createElektroInstallationsItems = function (responseItem){
+var createElektroInstallationsItems = function (responseData){
         lsItems = [];
-        switch(responseItem.currentLevel){
+        switch(responseData.currentLevel){
             case "projects":
-                rawItemList.forEach(function(listItem){
-                    lsItems.push(new Project(listItem, responseItem.currentLevel, responseItem.nextLevel)); 
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Project(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });
                 break;
             case "floors":
-                rawItemList.forEach(function(listItem){
-                    lsItems.push(new Floor(listItem, responseItem.currentLevel, responseItem.nextLevel)); 
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Floor(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });
                 break;
 
             case "rooms":
-                rawItemList.forEach(function(listItem){
-                    lsItems.push(new Room(listItem, responseItem.currentLevel, responseItem.nextLevel)); 
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Room(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });
                 break;
 
             case "loaders":
-                rawItemList.forEach(function(listItem){
-                    lsItems.push(new Loader(listItem, responseItem.currentLevel, responseItem.nextLevel)); 
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Loader(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });
                 break;
 
             case "sensors":
-                rawItemList.forEach(function(listItem){
-                    lsItems.push(new Sensor(listItem, responseItem.currentLevel, responseItem.nextLevel)); 
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Sensor(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });
                 break;
-                
+
             default:
                 console.log("ERROR: Listtype not known.");
                 return;
         }
+        console.log(lsItems);
         return lsItems;
     }
 
@@ -67,7 +68,17 @@ class electroInstallationItem {
         
         this.ajaxRequest = function(postRequest) {
             console.log("The post request is: " + postRequest);
-            $.post(window.location.orign, JSON.stringify(postRequest), alert(data));
+            $.ajax({
+                url: window.location.orign
+                , data: {data: JSON.stringify(postRequest)}
+                , dataType: "json"
+                , success: function(data){
+                    console.log("SUCCESS: \n" + data);
+                } 
+                , error : function(data){
+                    console.log("ERROR: \n" + data);
+                }
+            });
         }
 
         this.fetchChildren = function(){
