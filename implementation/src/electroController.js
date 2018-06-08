@@ -1,30 +1,21 @@
 $(document).ready(function(){
 
-    lsDummyData = [{
-        name : "Erdgeschoss"
-        , floor_count_from_basement : 1
-        , id : 3
-        , parent_id : 4
-    },
-    {
-        name : "Erster Stock"
-        , floor_count_from_basement : 2
-        , id : 4
-        , parent_id : 4
-    },
-    {
-        name : "Zweiter Stock"
-        , floor_count_from_basement : 3
-        , id : 5
-        , parent_id : 4
-    },
-    {
-        name : "Keller"
-        , floor_count_from_basement : 0
-        , id : 6
-        , parent_id : 4
-    }];
+    // Hardcoded postrequest for debugging / development purposes.
+    var postRequest = '{"action" : "getlist" , "listtype" : "FLOORS" , "parentid" : 2 }'
+    // @Roman: Mit dieser URL musst du auf deine Version des Backends zielen - sonst klappt gar nix!
+    var currentBackendAddress = "http://localhost/Uebung4/index.php";
 
-    electroListHandler.buildList(lsDummyData);
-
+    $.ajax({
+        url: currentBackendAddress,
+        type: "post",
+        data: {data: postRequest},
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+            electroListHandler.buildList(createElektroInstallationsItems(data));
+        },
+        error: function(data){
+            console.log("ERROR\n" + data);
+        }
+    });
 });
