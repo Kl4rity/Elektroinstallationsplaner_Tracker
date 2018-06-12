@@ -1,6 +1,6 @@
 var createElektroInstallationsItems = function (responseData){
         lsItems = [];
-        switch(responseData.currentLevel){
+        switch(responseData.currentLevel.toLowerCase()){
             case "projects":
                 responseData.data.forEach(function(listItem){
                     lsItems.push(new Project(listItem, responseData.currentLevel, responseData.nextLevel)); 
@@ -61,41 +61,52 @@ class electroInstallationItem {
             action : "update"
             , listtype : currentLevel
             , itemid : this.id
-            , specification : {
-                
-            }
+            , specification : null
         };
+
+        this.createPostRequest = {
+            action: "create"
+            , listtype : currentLevel
+            , parentid : null
+            , specification : null
+        }
         
         this.ajaxRequest = function(postRequest) {
             console.log("The post request is: " + postRequest);
-            $.ajax({
-                url: window.location.orign
-                , data: {data: JSON.stringify(postRequest)}
-                , dataType: "json"
-                , success: function(data){
-                    console.log("SUCCESS: \n" + data);
-                } 
-                , error : function(data){
-                    console.log("ERROR: \n" + data);
-                }
-            });
+            // $.ajax({
+            //     url: window.location.orign
+            //     , data: {data: JSON.stringify(postRequest)}
+            //     , dataType: "json"
+            //     , success: function(data){
+            //         console.log("SUCCESS: \n" + data);
+            //     } 
+            //     , error : function(data){
+            //         console.log("ERROR: \n" + data);
+            //     }
+            // });
         }
 
         this.fetchChildren = function(){
             console.log("AJAX Request to fetch Children will be triggered here.");
             this.ajaxRequest(this.fetchChildrenPostRequest);
         }
-
+        
+        this.delete = function(){
+            console.log("AJAX request to delete item will be triggered here.");
+            this.ajaxRequest(this.deletePostRequest);
+        }
+        
         this.update = function(specification){
             console.log("AJAX request to update the item will be triggered here.");
             console.log("Specification to be set: " + specification);
             this.updatePostRequest.specification = specification;
             this.ajaxRequest(this.updatePostRequest);
         }
-
-        this.delete = function(){
-            console.log("AJAX request to delete item will be triggered here.");
-            this.ajaxRequest(this.deletePostRequest);
+        
+        this.create = function(createParentId, specification){
+            this.createPostRequest.parentid = createParentId;
+            this.createPostRequest.specification = specification;
+            this.ajaxRequest(this.createPostRequest);
         }
     }
 }
