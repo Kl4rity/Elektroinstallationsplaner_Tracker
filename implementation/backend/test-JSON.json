@@ -1,0 +1,37 @@
+{
+        "action": "get-shoppinglist",
+        "parentid": 1
+}
+
+{
+	"action": "delete",
+	"listtype": "FLOORS",
+	"itemid": 9
+}
+
+{
+        "action": "create",
+        "listtype": "FLOORS",
+        "parentid": 1,
+        "specification": {
+                "name": "Erdgeschoss",
+                "floor_count_from_basement": 1
+        }
+}
+
+{
+        "action": "update",
+        "listtype": "FLOORS",
+        "itemid": 9,
+        "specification": {
+                "name": "Erdgeschoss2",
+                "floor_count_from_basement": 1
+        }
+}
+
+{
+        "action": "getlist",
+        "listtype": "FLOORS",
+        "parentid": 2
+}
+
