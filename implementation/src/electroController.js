@@ -1,3 +1,7 @@
+function initListeners(){
+    $("#addItem").click(addDialogueView.setFieldVisibility("floors"));
+}
+
 $(document).ready(function(){
 
     // Hardcoded postrequest for debugging / development purposes.
@@ -11,12 +15,13 @@ $(document).ready(function(){
         data: {data: postRequest},
         dataType: "json",
         success: function(data){
-            console.log(data);
+            console.log(createElektroInstallationsItems(data));
             electroListHandler.buildList(createElektroInstallationsItems(data));
         },
         error: function(data){
             console.log("ERROR\n" + data);
         }
     });
-
+    addDialogueView.initDOMNodes();
+    initListeners();
 });

@@ -75,6 +75,10 @@
     box-shadow: 0px 0px 0px black;
 }
 
+.invisible {
+    display: none;
+}
+
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(124,198,214,0.4);
 }
