@@ -44,6 +44,7 @@ class electroInstallationItem {
         this.id = itemData.id;
         this.created = itemData.created;
         this.lastChanged = itemData.last_change;
+        self = this;
 
         this.fetchChildrenPostRequest = {
             action : "getlist"
@@ -88,25 +89,25 @@ class electroInstallationItem {
 
         this.fetchChildren = function(){
             console.log("AJAX Request to fetch Children will be triggered here.");
-            this.ajaxRequest(this.fetchChildrenPostRequest);
+            self.ajaxRequest(self.fetchChildrenPostRequest);
         }
         
         this.delete = function(){
             console.log("AJAX request to delete item will be triggered here.");
-            this.ajaxRequest(this.deletePostRequest);
+            self.ajaxRequest(self.deletePostRequest);
         }
         
         this.update = function(specification){
             console.log("AJAX request to update the item will be triggered here.");
             console.log("Specification to be set: " + specification);
-            this.updatePostRequest.specification = specification;
-            this.ajaxRequest(this.updatePostRequest);
+            self.updatePostRequest.specification = specification;
+            self.ajaxRequest(self.updatePostRequest);
         }
         
         this.create = function(createParentId, specification){
-            this.createPostRequest.parentid = createParentId;
-            this.createPostRequest.specification = specification;
-            this.ajaxRequest(this.createPostRequest);
+            self.createPostRequest.parentid = createParentId;
+            self.createPostRequest.specification = specification;
+            self.ajaxRequest(self.createPostRequest);
         }
     }
 }
