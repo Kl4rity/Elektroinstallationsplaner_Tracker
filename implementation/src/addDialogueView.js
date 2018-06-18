@@ -9,6 +9,8 @@ var addDialogueView = {
     , dnAddItem : null
     , dnModalTitle : null
 
+    , currentLevelElectroInstallationsItems : null
+
     , currentLevel : null
 
     , configProjects : {
@@ -40,7 +42,7 @@ var addDialogueView = {
         , unit : true
         , value : true
     }
-    , initDialogue : function(currentLevel){
+    , initDialogue : function(currentLevel, currentLevelElectroInstallationsItems){
         this.dnName = document.getElementById("AddEdit-ItemName-Container");
         this.dnFloorCountFromBasement = document.getElementById("AddEdit-FloorCountFromBasement-Container");
         this.dnParentId = document.getElementById("AddEdit-ParentId-Container");
@@ -53,6 +55,7 @@ var addDialogueView = {
         this.dnAddItem.addEventListener("click", this.createNewEntryDialogue);
 
         this.currentLevel = currentLevel;
+        this.currentLevelElectroInstallationsItems = currentLevelElectroInstallationsItems;
 
         this.setFieldVisibility();
     }
@@ -192,10 +195,9 @@ var addDialogueView = {
         }
     }
     , createNewEntryDialogue : function() {
-        // Set button to display create Object
+        addDialogueView.clearFormFields();
         addDialogueView.dnSubmitButton.innerHTML = "Create Object";
         addDialogueView.dnModalTitle. innerHTML = "Create a new Object:"
-        // Set button to call the createObject function for the specific list.
         addDialogueView.dnSubmitButton.addEventListener("click", addDialogueView.createNewItem);
     }
     , createNewItem : function(){
@@ -209,24 +211,34 @@ var addDialogueView = {
         createItemFormData = addDialogueView.fetchSpecificationData();
         dummyElectroModelIteam.create(createItemFormData.parentId, createItemFormData.specification);
     }
-    , editExistingEntryDialogue: function(){
-        // Set button to display update Object
+    , editExistingEntryDialogue: function(clickedEditButton){
+        parentRow = clickedEditButton.parents().find("tr:first")[0];
+        clickedItemId = parentRow.getAttribute("itemId");
+
+        selectedItem = addDialogueView.findItemWithId(clickedItemId)[0];
+
+        console.log(selectedItem);
+
+        $("#AddEdit-ItemName").val(selectedItem.name);
+        $("#AddEdit-FloorCountFromBasement").val((selectedItem.floorCountFromBasement || null));
+        $("#AddEdit-ParentId").val((selectedItem.parentId || null));
+        $("#AddEdit-Unit").val((selectedItem.unit || null));
+        $("#AddEdit-Value").val((selectedItem.value || null));
+
         addDialogueView.dnSubmitButton.innerHTML = "Update Object";
         addDialogueView.dnModalTitle.innerHTML = "Edit an existing Object";
-        // Set button to call the item-specific updateObject function
-            // Fetch it from the application state by it's Id?
+        
         addDialogueView.dnSubmitButton.addEventListener("click", function(){
-            console.log($(this));
-            addDialogueView.editItem();
+            addDialogueView.editItem(selectedItem);
         });
     }
-    , editItem: function(){
-        // Find the item in a list of items.
-        selectedItem = findItemWithId();
+    , editItem: function(selectedItem){
         updateSpecificationData = addDialogueView.fetchSpecificationData.specification;
         selectedItem.update(updateSpecificationData);
     }
-    , findItemWithId: function(){
-
+    , findItemWithId: function(clickedItemId){
+        return addDialogueView.currentLevelElectroInstallationsItems.filter(function(item){
+            return item.id == clickedItemId;
+        });
     }
 }
