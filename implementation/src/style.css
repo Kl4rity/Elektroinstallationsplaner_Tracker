@@ -88,3 +88,7 @@
     background-color: #ffffff;
     border-color: rgba(124,198,214,0.4);
 }
+.appendedRow tr > td:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
