@@ -5,6 +5,12 @@ var addDialogueView = {
     , dnUnit : null
     , dnValue : null
 
+    , dnSubmitButton : null
+    , dnAddItem : null
+    , dnModalTitle : null
+
+    , currentLevel : null
+
     , configProjects : {
         name : true
     }
@@ -34,15 +40,26 @@ var addDialogueView = {
         , unit : true
         , value : true
     }
-    , initDOMNodes : function(){
+    , initDialogue : function(currentLevel){
         this.dnName = document.getElementById("AddEdit-ItemName-Container");
         this.dnFloorCountFromBasement = document.getElementById("AddEdit-FloorCountFromBasement-Container");
         this.dnParentId = document.getElementById("AddEdit-ParentId-Container");
         this.dnUnit = document.getElementById("AddEdit-Unit-Container");
         this.dnValue = document.getElementById("AddEdit-Value-Container");
+        this.dnSubmitButton = document.getElementById("AddEdit-Submit");
+        this.dnAddItem = document.getElementById("addItem");
+        this.dnModalTitle = document.getElementById("ElectroModalTitle");
+
+        this.dnAddItem.addEventListener("click", this.createNewEntryDialogue);
+
+        this.currentLevel = currentLevel;
+
+        this.setFieldVisibility();
     }
-    , setFieldVisibility : function(listName){
-        config = addDialogueView.getConfig(listName);
+    , setFieldVisibility : function(){
+
+        config = addDialogueView.getConfig(addDialogueView.currentLevel);
+
         if(addDialogueView.dnName.classList.contains("invisible")){
             addDialogueView.dnName.classList.remove("invisible");
         }
@@ -85,8 +102,8 @@ var addDialogueView = {
         $("#AddEdit-Unit").val("");
         $("#AddEdit-Value").val("");
     }
-    , fetchSpecificationData : function(listName){
-        config = this.getConfig(listName);
+    , fetchSpecificationData : function(){
+        config = this.getConfig(addDialogueView.currentLevel);
 
         returnObject = {
             parentid : null
@@ -157,8 +174,8 @@ var addDialogueView = {
         });
         return returnObject;
     }
-    , getConfig : function(listName){
-        switch(listName){
+    , getConfig : function(){
+        switch(addDialogueView.currentLevel){
             case "projects":
                 return addDialogueView.configProjects;
             case "floors":
@@ -173,5 +190,43 @@ var addDialogueView = {
                 console.log("Listtype unknown - no Add-Dialogue config available.");
                 return;
         }
+    }
+    , createNewEntryDialogue : function() {
+        // Set button to display create Object
+        addDialogueView.dnSubmitButton.innerHTML = "Create Object";
+        addDialogueView.dnModalTitle. innerHTML = "Create a new Object:"
+        // Set button to call the createObject function for the specific list.
+        addDialogueView.dnSubmitButton.addEventListener("click", addDialogueView.createNewItem);
+    }
+    , createNewItem : function(){
+        dummyItem = {
+            name : "none"
+            , id : 0
+            , created : 0
+            , last_changed : 0
+        };
+        dummyElectroModelIteam = new electroInstallationItem(dummyItem, addDialogueView.currentLevel, null);
+        createItemFormData = addDialogueView.fetchSpecificationData();
+        dummyElectroModelIteam.create(createItemFormData.parentId, createItemFormData.specification);
+    }
+    , editExistingEntryDialogue: function(){
+        // Set button to display update Object
+        addDialogueView.dnSubmitButton.innerHTML = "Update Object";
+        addDialogueView.dnModalTitle.innerHTML = "Edit an existing Object";
+        // Set button to call the item-specific updateObject function
+            // Fetch it from the application state by it's Id?
+        addDialogueView.dnSubmitButton.addEventListener("click", function(){
+            console.log($(this));
+            addDialogueView.editItem();
+        });
+    }
+    , editItem: function(){
+        // Find the item in a list of items.
+        selectedItem = findItemWithId();
+        updateSpecificationData = addDialogueView.fetchSpecificationData.specification;
+        selectedItem.update(updateSpecificationData);
+    }
+    , findItemWithId: function(){
+
     }
 }
