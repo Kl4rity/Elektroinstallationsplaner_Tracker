@@ -78,3 +78,13 @@
 .invisible {
     display: none;
 }
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(124,198,214,0.4);
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #ffffff;
+    border-color: rgba(124,198,214,0.4);
+}

@@ -1,5 +1,4 @@
 function initListeners(){
-    addDialogueView.initDOMNodes();
     $("#addItem").click(addDialogueView.setFieldVisibility("floors"));
 }
 
