@@ -18,7 +18,7 @@ $(document).ready(function(){
         success: function(data){
             currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
             electroListHandler.buildList(currentLevelElektroinstallationsItems);
-            addDialogueView.initDialogue(data.currentLevel.toLowerCase());
+            addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
         },
         error: function(data){
             console.log("ERROR\n" + data);
