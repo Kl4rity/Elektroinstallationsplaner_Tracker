@@ -74,17 +74,19 @@ class electroInstallationItem {
         
         this.ajaxRequest = function(postRequest) {
             console.log("The post request is: " + postRequest);
-            // $.ajax({
-            //     url: window.location.orign
-            //     , data: {data: JSON.stringify(postRequest)}
-            //     , dataType: "json"
-            //     , success: function(data){
-            //         console.log("SUCCESS: \n" + data);
-            //     } 
-            //     , error : function(data){
-            //         console.log("ERROR: \n" + data);
-            //     }
-            // });
+            $.ajax({
+                url: "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
+                , type: "post"
+                , data: {data: JSON.stringify(postRequest)}
+                , dataType: "json"
+                , cache: false
+                , success: function(data){
+                    console.log("SUCCESS: \n" + data);
+                } 
+                , error : function(data){
+                    console.log("ERROR: \n" + data);
+                }
+            });
         }
 
         this.fetchChildren = function(){
@@ -93,6 +95,7 @@ class electroInstallationItem {
         }
         
         this.delete = function(){
+            $(this).parents("tr:first")[0].remove();
             console.log("AJAX request to delete item will be triggered here.");
             self.ajaxRequest(self.deletePostRequest);
         }
