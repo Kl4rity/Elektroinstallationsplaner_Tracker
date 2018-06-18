@@ -1,5 +1,5 @@
 function initListeners(){
-    $("#addItem").click(addDialogueView.setFieldVisibility("floors"));
+    
 }
 
 $(document).ready(function(){
@@ -14,14 +14,15 @@ $(document).ready(function(){
         type: "post",
         data: {data: postRequest},
         dataType: "json",
+        cache: false,
         success: function(data){
-            console.log(createElektroInstallationsItems(data));
-            electroListHandler.buildList(createElektroInstallationsItems(data));
+            currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
+            electroListHandler.buildList(currentLevelElektroinstallationsItems);
+            addDialogueView.initDialogue(data.currentLevel.toLowerCase());
         },
         error: function(data){
             console.log("ERROR\n" + data);
         }
     });
-    addDialogueView.initDOMNodes();
     initListeners();
 });
