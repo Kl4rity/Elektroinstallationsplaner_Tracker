@@ -18,7 +18,8 @@ var createElektroInstallationsItems = function (responseData){
                 });
                 break;
 
-            case "loaders":
+            case "devices":
+                console.log(responseData.data);
                 responseData.data.forEach(function(listItem){
                     lsItems.push(new Loader(listItem, responseData.currentLevel, responseData.nextLevel)); 
                 });

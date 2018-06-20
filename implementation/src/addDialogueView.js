@@ -25,7 +25,7 @@ var addDialogueView = {
         name : true
         , parentId : true
     }
-    , configLoaders : {
+    , configDevices : {
         name : true
         , parentId : true
     }
@@ -185,8 +185,8 @@ var addDialogueView = {
                 return addDialogueView.configFloors;
             case "rooms":
                 return addDialogueView.configRooms;
-            case "loaders":
-                return addDialogueView.configLoaders;
+            case "devices":
+                return addDialogueView.configDevices;
             case "sensors":
                 return addDialogueView.configSensors;
             default:
@@ -212,7 +212,7 @@ var addDialogueView = {
         dummyElectroModelIteam.create(createItemFormData.parentId, createItemFormData.specification);
     }
     , editExistingEntryDialogue: function(clickedEditButton){
-        parentRow = clickedEditButton.parents().find("tr:first")[0];
+        parentRow = clickedEditButton.closest("tr")[0];
         clickedItemId = parentRow.getAttribute("itemId");
 
         selectedItem = addDialogueView.findItemWithId(clickedItemId)[0];

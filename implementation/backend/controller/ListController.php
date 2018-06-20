@@ -28,7 +28,7 @@ class ListController {
                     "PROJECTS"
                     ,"FLOORS"
                     ,"ROOMS"
-                    ,"LOADERS"
+                    ,"DEVICES"
                     ,"SENSORS"
                 ];
        
@@ -64,7 +64,7 @@ class ListController {
                 return new Floor("floors","projects_id", "rooms");
             case "ROOMS":
                 return new Room("rooms", "floors_id", "devices");
-            case "LAODERS":
+            case "DEVICES":
                 return new Device("devices", "rooms_id", "sensors");
             case "SENSORS":
                 return new Sensor("sensors","devices_id", "NONE");

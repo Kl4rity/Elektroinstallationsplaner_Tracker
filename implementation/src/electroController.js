@@ -5,7 +5,7 @@ function initListeners(){
 $(document).ready(function(){
 
     // Hardcoded postrequest for debugging / development purposes.
-    var postRequest = '{"action" : "getlist" , "listtype" : "PROJECTS" , "parentid" : 2 }';
+    var postRequest = '{"action" : "getlist" , "listtype" : "DEVICES" , "parentid" : 1 }';
     // @Roman: Mit dieser URL musst du auf deine Version des Backends zielen - sonst klappt gar nix!
     var currentBackendAddress = "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php";
 
