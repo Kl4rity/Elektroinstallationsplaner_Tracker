@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 include "controller/ListController.php";
 include "services/Database.php";
