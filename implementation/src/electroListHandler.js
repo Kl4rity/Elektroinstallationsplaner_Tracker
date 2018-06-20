@@ -1,5 +1,7 @@
 var electroListHandler = {
     buildList: function (lsItems) {
+
+        $(".appendedRow").empty();
         
         $.each(lsItems, function (index, value) {
             
