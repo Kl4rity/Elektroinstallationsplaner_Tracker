@@ -61,22 +61,26 @@ var addDialogueView = {
     }
     , setFieldVisibility : function(){
 
+        console.log(addDialogueView.currentLevel);
+        console.log(addDialogueView.getConfig(addDialogueView.currentLevel));
+        console.log((addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")));
+
         config = addDialogueView.getConfig(addDialogueView.currentLevel);
 
         if(addDialogueView.dnName.classList.contains("invisible")){
             addDialogueView.dnName.classList.remove("invisible");
         }
         if(addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")){
-            addDialogueView.dnFloorCountFromBasement.remove("invisible");
+            addDialogueView.dnFloorCountFromBasement.classList.remove("invisible");
         }
         if(addDialogueView.dnParentId.classList.contains("invisible")){
-            addDialogueView.dnParentId.remove("invisible");
+            addDialogueView.dnParentId.classList.remove("invisible");
         }
         if(addDialogueView.dnUnit.classList.contains("invisible")){
-            addDialogueView.dnUnit.remove("invisible");
+            addDialogueView.dnUnit.classList.remove("invisible");
         }
         if(addDialogueView.dnValue.classList.contains("invisible")){
-            addDialogueView.dnValue.remove("invisible");
+            addDialogueView.dnValue.classList.remove("invisible");
         }
 
         if (!config.name){
@@ -94,6 +98,7 @@ var addDialogueView = {
         if (!config.value){
             addDialogueView.dnValue.classList.add("invisible");
         }
+        console.log((addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")));
     }
     , resetFieldVisibility : function (){
         addDialogueView.setFieldVisibility(addDialogueView.configReset);
@@ -118,8 +123,7 @@ var addDialogueView = {
         fieldsAreValid = [];
 
         if (config.name){
-            name = $("#AddEdit-ItemName").val();
-            returnObject.specification.name = name;
+            returnObject.specification.name = $("#AddEdit-ItemName").val();
 
             if (!name) {
                 fieldsAreValid.push(false);
@@ -129,8 +133,7 @@ var addDialogueView = {
 
         };
         if (config.floorCountFromBasement){
-            floorCountFromBasement = $("#AddEdit-FloorCountFromBasement").val();
-            returnObject.specification.floor_count_from_basement = floorCountFromBasement;
+            returnObject.specification.floor_count_from_basement = $("#AddEdit-FloorCountFromBasement").val();
 
             if (!floorCountFromBasement) {
                 fieldsAreValid.push(false);
@@ -139,8 +142,7 @@ var addDialogueView = {
             }
         };
         if (config.parentId){
-            parentId = $("#AddEdit-ParentId").val();
-            returnObject.parentid = parentId;
+            returnObject.parentid = $("#AddEdit-ParentId").val();
 
             if (!parentId) {
                 fieldsAreValid.push(false);
@@ -149,8 +151,7 @@ var addDialogueView = {
             }
         };
         if (config.unit) {
-            unit = $("#AddEdit-Unit").val();
-            returnObject.specification.unit = unit;
+            returnObject.specification.unit = $("#AddEdit-Unit").val();
 
             if (!unit) {
                 fieldsAreValid.push(false);
@@ -159,8 +160,7 @@ var addDialogueView = {
             }
         };
         if (config.value){
-            value = $("#AddEdit-Value").val();
-            returnObject.specification.value = value;
+            returnObject.specification.value = $("#AddEdit-Value").val();
 
             if (!value) {
                 fieldsAreValid.push(false);
@@ -210,6 +210,7 @@ var addDialogueView = {
         dummyElectroModelIteam = new electroInstallationItem(dummyItem, addDialogueView.currentLevel, null);
         createItemFormData = addDialogueView.fetchSpecificationData();
         dummyElectroModelIteam.create(createItemFormData.parentId, createItemFormData.specification);
+        addDialogueView.clearFormFields();
     }
     , editExistingEntryDialogue: function(clickedEditButton){
         parentRow = clickedEditButton.closest("tr")[0];
@@ -233,8 +234,10 @@ var addDialogueView = {
         });
     }
     , editItem: function(selectedItem){
-        updateSpecificationData = addDialogueView.fetchSpecificationData.specification;
+        updateSpecificationData = addDialogueView.fetchSpecificationData().specification;
+        console.log(addDialogueView.fetchSpecificationData());
         selectedItem.update(updateSpecificationData);
+        addDialogueView.clearFormFields();
     }
     , findItemWithId: function(clickedItemId){
         return addDialogueView.currentLevelElectroInstallationsItems.filter(function(item){
