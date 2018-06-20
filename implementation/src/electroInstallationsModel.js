@@ -74,7 +74,7 @@ class electroInstallationItem {
         }
         
         this.ajaxRequest = function(postRequest) {
-            console.log("The post request is: " + postRequest);
+            console.log("The post request is: " + JSON.stringify(postRequest));
             $.ajax({
                 url: "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
                 , type: "post"
@@ -85,24 +85,23 @@ class electroInstallationItem {
                     console.log("SUCCESS: \n" + data);
                 } 
                 , error : function(data){
-                    console.log("ERROR: \n" + data);
+                    console.log("ERROR: \n" + JSON.stringify(data));
                 }
             });
         }
 
         this.fetchChildren = function(){
             console.log("AJAX Request to fetch Children will be triggered here.");
-            self.ajaxRequest(self.fetchChildrenPostRequest);
+            ElectroController.fetchData(self.fetchChildrenPostRequest);
         }
         
         this.delete = function(){
-            $(this).parents("tr:first")[0].remove();
+            $(this).closest("tr")[0].remove();
             console.log("AJAX request to delete item will be triggered here.");
             self.ajaxRequest(self.deletePostRequest);
         }
         
         this.update = function(specification){
-            console.log("AJAX request to update the item will be triggered here.");
             console.log("Specification to be set: " + specification);
             self.updatePostRequest.specification = specification;
             self.ajaxRequest(self.updatePostRequest);
@@ -119,6 +118,7 @@ class electroInstallationItem {
 class Project extends electroInstallationItem {
     constructor(itemData, currentLevel, nextLevel){
         super(itemData, currentLevel, nextLevel);
+        this.parentid = 0;
     }
 }
 
