@@ -56,14 +56,9 @@ var addDialogueView = {
 
         this.currentLevel = currentLevel;
         this.currentLevelElectroInstallationsItems = currentLevelElectroInstallationsItems;
-
         this.setFieldVisibility();
     }
     , setFieldVisibility : function(){
-
-        console.log(addDialogueView.currentLevel);
-        console.log(addDialogueView.getConfig(addDialogueView.currentLevel));
-        console.log((addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")));
 
         config = addDialogueView.getConfig(addDialogueView.currentLevel);
 
@@ -120,61 +115,22 @@ var addDialogueView = {
             }
         };
 
-        fieldsAreValid = [];
-
         if (config.name){
             returnObject.specification.name = $("#AddEdit-ItemName").val();
-
-            if (!name) {
-                fieldsAreValid.push(false);
-            } else {
-                fieldsAreValid.push(true);
-            }
-
         };
         if (config.floorCountFromBasement){
             returnObject.specification.floor_count_from_basement = $("#AddEdit-FloorCountFromBasement").val();
-
-            if (!floorCountFromBasement) {
-                fieldsAreValid.push(false);
-            } else {
-                fieldsAreValid.push(true);
-            }
         };
         if (config.parentId){
             returnObject.parentid = $("#AddEdit-ParentId").val();
-
-            if (!parentId) {
-                fieldsAreValid.push(false);
-            } else {
-                fieldsAreValid.push(true);
-            }
         };
         if (config.unit) {
             returnObject.specification.unit = $("#AddEdit-Unit").val();
-
-            if (!unit) {
-                fieldsAreValid.push(false);
-            } else {
-                fieldsAreValid.push(true);
-            }
         };
         if (config.value){
             returnObject.specification.value = $("#AddEdit-Value").val();
-
-            if (!value) {
-                fieldsAreValid.push(false);
-            } else {
-                fieldsAreValid.push(true);
-            }
         };
 
-        fieldsAreValid.map(function(isValid){
-            if(!isValid){
-                alert("Data entered is not valid. Please fill in the missing fields.");
-                return;
-            }
-        });
         return returnObject;
     }
     , getConfig : function(){
@@ -201,15 +157,16 @@ var addDialogueView = {
         addDialogueView.dnSubmitButton.addEventListener("click", addDialogueView.createNewItem);
     }
     , createNewItem : function(){
-        dummyItem = {
-            name : "none"
-            , id : 0
-            , created : 0
-            , last_changed : 0
-        };
-        dummyElectroModelIteam = new electroInstallationItem(dummyItem, addDialogueView.currentLevel, null);
-        createItemFormData = addDialogueView.fetchSpecificationData();
-        dummyElectroModelIteam.create(createItemFormData.parentId, createItemFormData.specification);
+        newItemRequest = {
+            action: "create"
+            , listtype: addDialogueView.currentLevel
+            , parentid: null
+            , specification: null
+        }
+        formData = addDialogueView.fetchSpecificationData();
+        newItemRequest.parentid = formData.parentId || 0;
+        newItemRequest.specification = formData.specification;
+        (new electroInstallationItem({name: null, id: null, created:null, lastChanged:null}, null, null)).ajaxRequest(newItemRequest);
         addDialogueView.clearFormFields();
     }
     , editExistingEntryDialogue: function(clickedEditButton){

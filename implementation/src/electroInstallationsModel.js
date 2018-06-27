@@ -65,15 +65,8 @@ class electroInstallationItem {
             , itemid : this.id
             , specification : null
         };
-
-        this.createPostRequest = {
-            action: "create"
-            , listtype : currentLevel
-            , parentid : null
-            , specification : null
-        }
         
-        this.ajaxRequest = function(postRequest) {
+        this.ajaxRequest = (postRequest) => {
             console.log("The post request is: " + JSON.stringify(postRequest));
             $.ajax({
                 url: "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
@@ -82,7 +75,8 @@ class electroInstallationItem {
                 , dataType: "json"
                 , cache: false
                 , success: function(data){
-                    console.log("SUCCESS: \n" + data);
+                    console.log(JSON.stringify(data));
+                    ElectroController.reloadCurrentData();
                 } 
                 , error : function(data){
                     console.log("ERROR: \n" + JSON.stringify(data));
@@ -90,28 +84,25 @@ class electroInstallationItem {
             });
         }
 
-        this.fetchChildren = function(){
+        this.fetchChildren = ()=>{
             console.log("AJAX Request to fetch Children will be triggered here.");
+<<<<<<< HEAD
             ElectroController.fetchData(self.fetchChildrenPostRequest);
             electroListHandler.updateProjectName();
+=======
+            ElectroController.fetchData(this.fetchChildrenPostRequest);
+>>>>>>> 48f58f28659179a3e4a2defffc34b7b6fb5b253a
         }
         
-        this.delete = function(){
-            $(this).closest("tr")[0].remove();
+        this.delete = ()=>{
             console.log("AJAX request to delete item will be triggered here.");
-            self.ajaxRequest(self.deletePostRequest);
+            this.ajaxRequest(this.deletePostRequest);
         }
         
-        this.update = function(specification){
+        this.update = (specification)=>{
             console.log("Specification to be set: " + specification);
-            self.updatePostRequest.specification = specification;
-            self.ajaxRequest(self.updatePostRequest);
-        }
-        
-        this.create = function(createParentId, specification){
-            self.createPostRequest.parentid = createParentId;
-            self.createPostRequest.specification = specification;
-            self.ajaxRequest(self.createPostRequest);
+            this.updatePostRequest.specification = specification;
+            this.ajaxRequest(this.updatePostRequest);
         }
     }
 }

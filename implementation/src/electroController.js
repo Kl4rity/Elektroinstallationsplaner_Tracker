@@ -1,6 +1,10 @@
 var ElectroController = {
     currentBackendAddress : "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
+    , lastRequest : null
     , fetchData : function(requestObject){
+
+        ElectroController.lastRequest = requestObject;
+
         $.ajax({
             url: ElectroController.currentBackendAddress,
             type: "post",
@@ -9,6 +13,7 @@ var ElectroController = {
             cache: false,
             success: function(data){
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
+                
                 electroListHandler.buildList(currentLevelElektroinstallationsItems);
                 addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
                 sidebarView.highlightStage(currentLevelElektroinstallationsItems);
@@ -18,11 +23,15 @@ var ElectroController = {
             }
         });
     }
+    , reloadCurrentData : function(){
+        ElectroController.fetchData(ElectroController.lastRequest);
+    }
 }
 
 $(document).ready(function(){
 
     var initialRequest = {action : "getlist" , listtype : "PROJECTS" , parentid : "1"};
+
     ElectroController.fetchData(initialRequest);
 
 });
