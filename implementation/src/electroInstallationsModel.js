@@ -1,54 +1,94 @@
 var createElektroInstallationsItems = function (responseData){
         lsItems = [];
-        switch(responseData.currentLevel.toLowerCase()){
-            case "projects":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Project(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-            case "floors":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Floor(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            case "rooms":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Room(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            case "devices":
-                console.log(responseData.data);
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Loader(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            case "sensors":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Sensor(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            case "fuses":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new Fuse(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            case "circuit_breakers":
-                responseData.data.forEach(function(listItem){
-                    lsItems.push(new CircuitBreaker(listItem, responseData.currentLevel, responseData.nextLevel)); 
-                });
-                break;
-
-            default:
-                console.log("ERROR: Listtype not known.");
-                return;
+        if(responseData.data.length > 1){
+            switch(responseData.currentLevel.toLowerCase()){
+                case "projects":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Project(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+                case "floors":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Floor(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                case "rooms":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Room(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                case "devices":
+                    console.log(responseData.data);
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Loader(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                case "sensors":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Sensor(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                case "fuses":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Fuse(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                case "circuit_breakers":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new CircuitBreaker(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                    });
+                    break;
+    
+                default:
+                    console.log("ERROR: Listtype not known.");
+                    return;
+            }
+            console.log(lsItems);
+            return lsItems;
+        } else if (responseData.data.length == 1) {
+            console.log(responseData.data);
+            switch(responseData.currentLevel.toLowerCase()){
+                case "projects":
+                    lsItems.push(new Project(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+                case "floors":
+                    lsItems.push(new Floor(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                case "rooms":
+                    lsItems.push(new Room(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                case "devices":
+                    lsItems.push(new Device(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                case "sensors":
+                    lsItems.push(new Sensor(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                case "fuses":
+                    lsItems.push(new Fuse(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                case "circuit_breakers":
+                    lsItems.push(new CircuitBreaker(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    break;
+    
+                default:
+                    console.log("ERROR: Listtype not known.");
+                    return;
+            }
+            console.log(lsItems);
+            return lsItems;
+        } else {
+            return lsItems;
         }
-        console.log(lsItems);
-        return lsItems;
     }
 
 class electroInstallationItem {

@@ -1,7 +1,7 @@
 var ElectroController = {
     currentBackendAddress : "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
     , lastRequest : null
-    , fetchData : function(requestObject){
+    , fetchData : function(requestObject, parentid){
 
         ElectroController.lastRequest = requestObject;
 
@@ -12,9 +12,10 @@ var ElectroController = {
             dataType: "json",
             cache: false,
             success: function(data){
+                console.log(data);
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
                 
-                electroListHandler.buildList(currentLevelElektroinstallationsItems);
+                electroListHandler.buildList(currentLevelElektroinstallationsItems, requestObject.listtype, requestObject.parentid);
                 addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
                 sidebarView.highlightStage(currentLevelElektroinstallationsItems);
             },
