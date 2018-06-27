@@ -112,7 +112,12 @@
     cursor: pointer;
 }
 
-#listTitle {
+.shoppingList tr > td:first-child:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#listTitle{
     display:inline-block;
 }
 
