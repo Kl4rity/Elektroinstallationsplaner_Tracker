@@ -1,9 +1,10 @@
 var ElectroController = {
     currentBackendAddress : "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
-    , lastRequest : null
-    , fetchData : function(requestObject, parentid){
-
-        ElectroController.lastRequest = requestObject;
+    , requestHistory : []
+    , fetchData : function(requestObject){
+        if(!Object.is(requestObject, ElectroController.requestHistory[ElectroController.requestHistory.length -1])){
+            ElectroController.requestHistory.push(requestObject);
+        }
 
         $.ajax({
             url: ElectroController.currentBackendAddress,
@@ -25,7 +26,7 @@ var ElectroController = {
         });
     }
     , reloadCurrentData : function(){
-        ElectroController.fetchData(ElectroController.lastRequest);
+        ElectroController.fetchData(ElectroController.requestHistory[ElectroController.requestHistory.length -1]);
     }
     , createNewElement : function(requestObject){
         $.ajax({
@@ -34,7 +35,7 @@ var ElectroController = {
             data: {data: JSON.stringify(requestObject)},
             dataType: "json",
             cache: false,
-            success: function(data){
+            success: function(){
                 ElectroController.reloadCurrentData();
             },
             error: function(data){
@@ -42,12 +43,20 @@ var ElectroController = {
             }
         });
     }
+    , onBackButton : function(){
+        if(ElectroController.requestHistory.length > 1){
+            ElectroController.requestHistory.pop();
+            ElectroController.reloadCurrentData();
+        } else {
+            ElectroController.reloadCurrentData();
+        }
+    }
 }
 
 $(document).ready(function(){
 
     var initialRequest = {action : "getlist" , listtype : "PROJECTS" , parentid : "1"};
 
+    $("#backButton").click(ElectroController.onBackButton); 
     ElectroController.fetchData(initialRequest);
-
 });
