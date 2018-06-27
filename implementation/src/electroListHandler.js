@@ -1,39 +1,51 @@
 var electroListHandler = {
-    buildList: function (lsItems) {
+    buildList: function (lsItems, listtype, parentid) {
 
         $(".appendedRow").empty();
-        
-        $.each(lsItems, function (index, value) {
 
-            objectName = value.constructor.name.toUpperCase();
-            floorName = value.name;
-            var deleteButtonId = "deleteButton-" + index;
-            var editButtonId = "editButton-" + index;
-            var floorNameId = "floorName-" + index;
+        $(".appendedRow").attr("listtype", listtype);
+        $(".appendedRow").attr("parentid", parentid);
 
-            var listItem = "<tr itemId=" + value.id + "> <td class='name' id=" + floorNameId + ">" + floorName + "</td><td class='extraData'></td><td align='right'><div class='btn-group mr-2' role='group' aria-label='First group'>"
-                + "<button type ='button' class='btn btn-secondary editButton' id=" + editButtonId + " data-toggle='modal' data-target='#exampleModalCenter'><img src='../icons/edit.png' width='25px' height='25px'></button>"
-                + "<button type ='button' class='btn btn-secondary detailsButton'><img src='../icons/show.png' width='25px' height='25px'></button>"
-                + "<button type ='button' class='btn btn-secondary deleteButton' id=" + deleteButtonId + "><img src='../icons/delete.png' width='25px' height='25px'></button>"
-                + "</div></td></tr> ";
-            $(".appendedRow").prepend(listItem);
+        if(lsItems.length >= 1){
+            $.each(lsItems, function (index, value) {
 
-            $("#" + deleteButtonId).click(value.delete);
-
-            $("#" + editButtonId).click(function () {
-                addDialogueView.editExistingEntryDialogue($(this));
+                console.log(value);
+    
+                objectName = value.constructor.name.toUpperCase();
+                floorName = value.name;
+                var deleteButtonId = "deleteButton-" + index;
+                var editButtonId = "editButton-" + index;
+                var floorNameId = "floorName-" + index;
+    
+                var listItem = "<tr itemId=" + value.id + "> <td class='name' id=" + floorNameId + ">" + floorName + "</td><td class='extraData'></td><td align='right'><div class='btn-group mr-2' role='group' aria-label='First group'>"
+                    + "<button type ='button' class='btn btn-secondary editButton' id=" + editButtonId + " data-toggle='modal' data-target='#exampleModalCenter'><img src='../icons/edit.png' width='25px' height='25px'></button>"
+                    + "<button type ='button' class='btn btn-secondary detailsButton'><img src='../icons/show.png' width='25px' height='25px'></button>"
+                    + "<button type ='button' class='btn btn-secondary deleteButton' id=" + deleteButtonId + "><img src='../icons/delete.png' width='25px' height='25px'></button>"
+                    + "</div></td></tr> ";
+                $(".appendedRow").prepend(listItem);
+    
+                $("#" + deleteButtonId).click(value.delete);
+    
+                $("#" + editButtonId).click(function () {
+                    addDialogueView.editExistingEntryDialogue($(this));
+                });
+                $("#" + floorNameId).click(value.fetchChildren);
+    
+                //Change Title of Project when ProjectName is clicked
+                $(".name").click(function () {
+                    if (objectName == "PROJECT") {
+                        var projectTitle = $(this).text();
+                        $("#projectHeadTitle").text(projectTitle);
+                    }
+                });           
             });
-            $("#" + floorNameId).click(value.fetchChildren);
+        } else if (lsItems.length == 0){
+            console.log("nothing here.");
 
-            //Change Title of Project when ProjectName is clicked
-            $(".name").click(function () {
-                if (objectName == "PROJECT") {
-                    var projectTitle = $(this).text();
-                    $("#projectHeadTitle").text(projectTitle);
-                }
-            });           
-        });
-        this.showStageTitle(); 
+            var listItem = "<tr> <td class='name'> It is lonely here! Add an item!</td><td class='extraData'></td></tr> ";
+                $(".appendedRow").prepend(listItem);
+        }
+        this.showStageTitle(listtype); 
     }
 
 
@@ -62,8 +74,8 @@ var electroListHandler = {
         newItem.create();
     }
 
-    , showStageTitle: function () {
-        $("#listTitle").text(objectName + "S");
+    , showStageTitle: function (listtype) {
+        $("#listTitle").text(listtype.toUpperCase());
     }
 
     , createProjectTitle: function () {

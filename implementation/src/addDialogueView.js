@@ -163,6 +163,7 @@ var addDialogueView = {
     }
     , createNewEntryDialogue : function() {
         addDialogueView.clearFormFields();
+        $("#AddEdit-ParentId").val($(".appendedRow").attr("parentid"));
         addDialogueView.dnSubmitButton.innerHTML = "Create Object";
         addDialogueView.dnModalTitle. innerHTML = "Create a new Object:"
         addDialogueView.dnSubmitButton.addEventListener("click", addDialogueView.createNewItem);
