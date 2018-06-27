@@ -46,6 +46,7 @@ var electroListHandler = {
                 $(".appendedRow").prepend(listItem);
         }
         this.showStageTitle(listtype); 
+        $("#shoppingListBtn").click(function () { switchView("pageShoppingList")});
     }
 
 

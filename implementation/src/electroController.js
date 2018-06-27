@@ -12,6 +12,7 @@ var ElectroController = {
             dataType: "json",
             cache: false,
             success: function(data){
+                switchView("page1");
                 console.log(data);
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
                 
