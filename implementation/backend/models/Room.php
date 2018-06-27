@@ -14,7 +14,7 @@
 class Room extends ElectricModelItem {
     //put your code here
     public function create($parentId, $specification) {
-        $sql = " INSERT INTO " . $this->tableNameString . "(".$this->parentIdTypeString.", name) VALUES (". $parentId . " , '" . $specification->name . "')";
+        $sql = " INSERT INTO " . $this->tableNameString . " (".$this->parentIdTypeString.", name, fuses_id) VALUES (". $parentId . " , '" . $specification->name . "' , ". $specification->fuses_id .")";
         return $this->database->query($sql);
     }
 
