@@ -31,6 +31,18 @@ var createElektroInstallationsItems = function (responseData){
                 });
                 break;
 
+            case "fuses":
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new Fuse(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                });
+                break;
+
+            case "circuit_breakers":
+                responseData.data.forEach(function(listItem){
+                    lsItems.push(new CircuitBreaker(listItem, responseData.currentLevel, responseData.nextLevel)); 
+                });
+                break;
+
             default:
                 console.log("ERROR: Listtype not known.");
                 return;
@@ -50,7 +62,7 @@ class electroInstallationItem {
         this.fetchChildrenPostRequest = {
             action : "getlist"
             , listtype : nextLevel
-            , parentid : 1
+            , parentid : this.id
         }
 
         this.deletePostRequest = {
@@ -86,12 +98,8 @@ class electroInstallationItem {
 
         this.fetchChildren = ()=>{
             console.log("AJAX Request to fetch Children will be triggered here.");
-<<<<<<< HEAD
             ElectroController.fetchData(self.fetchChildrenPostRequest);
             electroListHandler.updateProjectName();
-=======
-            ElectroController.fetchData(this.fetchChildrenPostRequest);
->>>>>>> 48f58f28659179a3e4a2defffc34b7b6fb5b253a
         }
         
         this.delete = ()=>{
@@ -149,14 +157,14 @@ class Sensor extends electroInstallationItem {
     }
 }
 
-// class CircuitBreaker extends electroInstallationItem {
-//     constructor(itemData, currentLevel, nextLevel){
-//         super(itemData, currentLevel, nextLevel);
-//     }
-// }
+class CircuitBreaker extends electroInstallationItem {
+    constructor(itemData, currentLevel, nextLevel){
+        super(itemData, currentLevel, nextLevel);
+    }
+}
 
-// class Fuse extends electroInstallationItem {
-//     constructor(itemData, currentLevel, nextLevel){
-//         super(itemData, currentLevel, nextLevel);
-//     }
-// }
+class Fuse extends electroInstallationItem {
+    constructor(itemData, currentLevel, nextLevel){
+        super(itemData, currentLevel, nextLevel);
+    }
+}
