@@ -13,12 +13,13 @@ var ElectroController = {
             dataType: "json",
             cache: false,
             success: function(data){
+                switchView("page1");
                 console.log(data);
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
-                
                 electroListHandler.buildList(currentLevelElektroinstallationsItems, requestObject.listtype, requestObject.parentid);
                 addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
                 sidebarView.highlightStage(currentLevelElektroinstallationsItems);
+                shoppinglistView.getProjects(currentLevelElektroinstallationsItems);
             },
             error: function(data){
                 console.log("ERROR\n" + data);

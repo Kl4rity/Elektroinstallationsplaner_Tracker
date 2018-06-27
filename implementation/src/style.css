@@ -75,11 +75,30 @@
     box-shadow: 0px 0px 0px black;
 }
 
+.reportButton {
+    background: rgb(124, 198, 214);
+    color: white;
+    border-radius: 0px;
+    height: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: small;
+    box-shadow: 0px 0px 0px black;
+}
+
+.circuitBtn{
+    width: 92px;
+}
+
 .invisible {
     display: none;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(124,198,214,0.4);
+}
+
+.table-head {
     background-color: rgba(124,198,214,0.4);
 }
 
@@ -91,4 +110,14 @@
 .appendedRow tr > td:first-child:hover {
     font-weight: bold;
     cursor: pointer;
+}
+
+#listTitle{
+    display:inline-block;
+}
+
+@media print {
+    .sidebar{
+        display: none;
+    }
 }

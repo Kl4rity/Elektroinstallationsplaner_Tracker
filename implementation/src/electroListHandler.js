@@ -46,16 +46,11 @@ var electroListHandler = {
                 $(".appendedRow").prepend(listItem);
         }
         this.showStageTitle(listtype); 
+        $("#shoppingListBtn").click(function () {
+            switchView("pageShoppingList");
+            shoppinglistView.getProjects();
+        });
     }
-
-
-
-    //, deleteRow: function () {
-    //    //l�scht die aktuelle Liste
-    //    $(this).parents("tr:first")[0].remove();
-    //    //get text value of parent with classname "name" 
-    //    //var itemName = ($(this).parents().find(".name").text());
-    //}
 
     , showDetails: function () {
         console.log("clicked");
