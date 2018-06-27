@@ -98,6 +98,10 @@
     background-color: rgba(124,198,214,0.4);
 }
 
+.table-head {
+    background-color: rgba(124,198,214,0.4);
+}
+
 .btn-secondary {
     color: #fff;
     background-color: #ffffff;
@@ -106,6 +110,10 @@
 .appendedRow tr > td:first-child:hover {
     font-weight: bold;
     cursor: pointer;
+}
+
+#listTitle{
+    display:inline-block;
 }
 
 @media print {

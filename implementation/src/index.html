@@ -17,10 +17,12 @@
 
     <script src="electroInstallationsModel.js"></script>
     <script src="switchViewLogic.js"></script>
+    <script src="shoppinglistView.js"></script>
     <script src="electroListHandler.js"></script>
     <script src="electroController.js"></script>
     <script src="addDialogueView.js"></script>
     <script src="sidebarView.js"></script>
+    
     
 </head>
 <body>
@@ -52,16 +54,13 @@
         <div id="page1" class="col-9 mainView">
             <h1 id="projectHeadTitle">CHOOSE A PROJECT</h1>
             <br>
-            <h3 id="listTitle"></h3>
+            <h3 id="listTitle"></h3><span id="backButton"> ^</span>
             <div id="floorName" class="col-9 list-group list-group-flush showInline">
-
                 <table class="table table-striped">
                     <tbody class="appendedRow">
-                      
                     </tbody>
                 </table>
-
-                         </div>
+            </div>
             <br>
             <!--<h3>First Floor</h3>
             <div class="list-group list-group-flush">
@@ -135,9 +134,41 @@
      </div>
 
     <div id="pageShoppingList" class="container">
-        <h1>PROJECTNAME</h1>
-        <br>
-        <h3>SHOPPINGLIST</h3>
-    </div>
+        <div id="page1" class="col-9 mainView">
+            <h1>CHOOSE A PROJECT</h1>
+            <div id="floorName" class="col-9 list-group list-group-flush showInline">
+                <table class="table table-striped">
+                    <tbody class="appendedRow"></tbody>
+                </table>
+            </div>
+            <br>
+            <h3>SHOPPINGLIST</h3>
+            <div id="floorName" class="col-9 list-group list-group-flush showInline">
+                <table class="table">
+                    <thead class="table-head">
+                        <tr>
+                            <th>DEVICE</th>
+                            <th>QUANTITY</th>
+                        </tr>
+                    </thead>
+                    <tbody class="shoppingListRow">
+                        <tr>
+                            <td>Licht</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Steckdose</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Rollo</td>
+                            <td>7</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        </div>
 </body>
 </html>
