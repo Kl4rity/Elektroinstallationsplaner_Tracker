@@ -4,9 +4,9 @@ var electroListHandler = {
         $(".appendedRow").empty();
         
         $.each(lsItems, function (index, value) {
-            
+ 
             objectName = value.constructor.name.toUpperCase();
-            var floorName = value.name;
+            floorName = value.name;
             var deleteButtonId = "deleteButton-" + index;
             var editButtonId = "editButton-" + index;
             var floorNameId = "floorName-" + index;
@@ -17,15 +17,21 @@ var electroListHandler = {
                 + "<button type ='button' class='btn btn-secondary deleteButton' id=" + deleteButtonId + "><img src='../icons/delete.png' width='25px' height='25px'></button>"
                 + "</div></td></tr> ";
             $(".appendedRow").prepend(listItem);
+
             $("#" + deleteButtonId).click(value.delete);
             
             $("#" + editButtonId).click(function(){
                 addDialogueView.editExistingEntryDialogue($(this));
             });
             $("#" + floorNameId).click(value.fetchChildren);
+
+            
             
         });
-        $("#listTitle").text(objectName + "S");
+
+        this.getProjectName();
+
+        this.showStageTitle(); 
     }
 
 
@@ -53,6 +59,31 @@ var electroListHandler = {
         var newItem = new electroInstallationItem(itemData, currentLevel, nextLevel);
         newItem.create();
     }
+
+    , showStageTitle: function () {
+        $("#listTitle").text(objectName + "S");
+    }
+
+    , getProjectName: () => {  
+        var newObjectName;
+        var setNewObjectName =  () => {
+            if (objectName == "PROJECT") {
+                console.log(objectName);
+                $(".name").click(function () {
+                    newObjectName = $(this).text();
+                    return newObjectName;
+                })  
+                
+            }   
+            
+        }
+        console.log(newObjectName);
+    }
+
+    , updateProjectName: function () {
+        var newName = this.getProjectName();
+        $("#projectHeadTitle").text(newName);
+        }
 }
 
 //funktionen der Objektinstanz auf die Buttons setzen und in der Console ausgeben

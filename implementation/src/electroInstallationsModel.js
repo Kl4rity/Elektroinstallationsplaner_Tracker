@@ -45,12 +45,12 @@ class electroInstallationItem {
         this.id = itemData.id;
         this.created = itemData.created;
         this.lastChanged = itemData.last_change;
-        self = this;
+       self = this;
 
         this.fetchChildrenPostRequest = {
             action : "getlist"
             , listtype : nextLevel
-            , parentid : this.id
+            , parentid : 1
         }
 
         this.deletePostRequest = {
@@ -93,6 +93,7 @@ class electroInstallationItem {
         this.fetchChildren = function(){
             console.log("AJAX Request to fetch Children will be triggered here.");
             ElectroController.fetchData(self.fetchChildrenPostRequest);
+            electroListHandler.updateProjectName();
         }
         
         this.delete = function(){

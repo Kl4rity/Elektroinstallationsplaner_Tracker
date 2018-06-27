@@ -11,6 +11,7 @@ var ElectroController = {
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
                 electroListHandler.buildList(currentLevelElektroinstallationsItems);
                 addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
+                sidebarView.highlightStage(currentLevelElektroinstallationsItems);
             },
             error: function(data){
                 console.log("ERROR\n" + data);
