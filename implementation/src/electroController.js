@@ -26,6 +26,21 @@ var ElectroController = {
     , reloadCurrentData : function(){
         ElectroController.fetchData(ElectroController.lastRequest);
     }
+    , createNewElement : function(requestObject){
+        $.ajax({
+            url: ElectroController.currentBackendAddress,
+            type: "post",
+            data: {data: JSON.stringify(requestObject)},
+            dataType: "json",
+            cache: false,
+            success: function(data){
+                ElectroController.reloadCurrentData();
+            },
+            error: function(data){
+                console.log("ERROR\n" + data);
+            }
+        });
+    }
 }
 
 $(document).ready(function(){
