@@ -16,10 +16,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <script src="electroInstallationsModel.js"></script>
+    <script src="switchViewLogic.js"></script>
     <script src="electroListHandler.js"></script>
     <script src="electroController.js"></script>
     <script src="addDialogueView.js"></script>
     <script src="sidebarView.js"></script>
+    
 </head>
 <body>
     <div class="container">
@@ -41,13 +43,13 @@
                     </ul>
                 <h3>3. Report</h3>
                     <ul>
-                        <li>Materials</li>
-                        <li>Circuit Plan</li>
+                        <li><button type="button" class="reportButton" id="shoppingListBtn">Shoppinglist</button></li>
+                        <li><button type="button" class="reportButton circuitBtn" id="shoppingListBtn">Circuit Plan</button></li>
                     </ul>
             </div>
         </div>
 
-        <div class="col-9 mainView">
+        <div id="page1" class="col-9 mainView">
             <h1 id="projectHeadTitle">CHOOSE A PROJECT</h1>
             <br>
             <h3 id="listTitle"></h3>
@@ -89,6 +91,7 @@
                 +
             </button>
         </div>
+
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -129,5 +132,12 @@
           </div>
         </div>
       </div>
+     </div>
+
+    <div id="pageShoppingList" class="container">
+        <h1>PROJECTNAME</h1>
+        <br>
+        <h3>SHOPPINGLIST</h3>
+    </div>
 </body>
 </html>
