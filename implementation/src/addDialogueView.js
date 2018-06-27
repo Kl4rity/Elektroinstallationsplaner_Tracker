@@ -35,6 +35,13 @@ var addDialogueView = {
         , unit : true
         , value : true
     }
+    , configFuses: {
+        name: true
+        , parentId : true
+    }
+    , configCicuitBreakers: {
+        name: true
+    }
     , configReset:{
         name: true
         , floorCountFromBasement : true
@@ -145,6 +152,10 @@ var addDialogueView = {
                 return addDialogueView.configDevices;
             case "sensors":
                 return addDialogueView.configSensors;
+            case "fuses":
+                return addDialogueView.configFuses;
+            case "circuit_breakers":
+                return addDialogueView.configCicuitBreakers;
             default:
                 console.log("Listtype unknown - no Add-Dialogue config available.");
                 return;
@@ -164,9 +175,9 @@ var addDialogueView = {
             , specification: null
         }
         formData = addDialogueView.fetchSpecificationData();
-        newItemRequest.parentid = formData.parentId || 0;
+        newItemRequest.parentid = formData.parentid || 0;
         newItemRequest.specification = formData.specification;
-        (new electroInstallationItem({name: null, id: null, created:null, lastChanged:null}, null, null)).ajaxRequest(newItemRequest);
+        ElectroController.createNewElement(newItemRequest);
         addDialogueView.clearFormFields();
     }
     , editExistingEntryDialogue: function(clickedEditButton){
