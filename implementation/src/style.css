@@ -112,8 +112,23 @@
     cursor: pointer;
 }
 
-#listTitle{
+#listTitle {
     display:inline-block;
+}
+
+#backButton {
+    height:25px;
+    float: right;
+    padding-right: 20px;
+    opacity: 0.5;
+}
+
+#backButton:hover {
+    opacity: 1;
+}
+
+#header-row{
+    padding-left: 0px;
 }
 
 @media print {
