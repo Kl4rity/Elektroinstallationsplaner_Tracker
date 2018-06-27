@@ -86,12 +86,7 @@ class electroInstallationItem {
 
         this.fetchChildren = ()=>{
             console.log("AJAX Request to fetch Children will be triggered here.");
-<<<<<<< HEAD
             ElectroController.fetchData(self.fetchChildrenPostRequest);
-            electroListHandler.updateProjectName();
-=======
-            ElectroController.fetchData(this.fetchChildrenPostRequest);
->>>>>>> 48f58f28659179a3e4a2defffc34b7b6fb5b253a
         }
         
         this.delete = ()=>{
