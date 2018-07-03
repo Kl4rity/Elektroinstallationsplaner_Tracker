@@ -16,9 +16,9 @@ var sidebarView = {
         var stages = ["Floor", "Room", "Loader", "Sensor"];
         for (i = 0; i < stages.length; i++) {
             if (stageName == stages[i]) {
-            $("." + stageName).css("text-decoration", "Underline");
+                $("." + stageName).css({ "background": "white", "color": "rgb(124, 198, 214)" });
             } else {
-            $("." + stages[i]).css("text-decoration", "none");
+                $("." + stages[i]).css({ "background": "rgb(124, 198, 214)", "color": "white" });
     }
 }}
 
