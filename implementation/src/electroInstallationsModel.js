@@ -116,43 +116,18 @@ class electroInstallationItem {
             , itemid : this.id
             , specification : null
         };
-        
-        this.ajaxRequest = (postRequest) => {
-            console.log("The post request is: " + JSON.stringify(postRequest));
-            $.ajax({
-                url: "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
-                , type: "post"
-                , data: {data: JSON.stringify(postRequest)}
-                , dataType: "json"
-                , cache: false
-                , success: function(data){
-                    console.log(JSON.stringify(data));
-                    ElectroController.reloadCurrentData();
-                } 
-                , error : function(data){
-                    console.log("ERROR: \n" + JSON.stringify(data));
-                }
-            });
-        }
 
         this.fetchChildren = ()=>{
-            console.log("AJAX Request to fetch Children will be triggered here.");
-            console.log(this.fetchChildrenPostRequest);
-            ElectroController.fetchData(this.fetchChildrenPostRequest);
+            queryService.loadNewView(this.fetchChildrenPostRequest);
         }
         
         this.delete = ()=>{
-            console.log("AJAX request to delete item will be triggered here.");
-            console.log(this.deletePostRequest);
-            this.ajaxRequest(this.deletePostRequest);
+            queryService.createUpdateDeleteQuery(this.deletePostRequest);
         }
         
         this.update = (specification)=>{
-            console.log("AJAX request to update item will be triggered here.");
-            console.log(this.updatePostRequest);
-            console.log("Specification to be set: " + specification);
             this.updatePostRequest.specification = specification;
-            this.ajaxRequest(this.updatePostRequest);
+            queryService.createUpdateDeleteQuery(this.updatePostRequest);
         }
 
     }

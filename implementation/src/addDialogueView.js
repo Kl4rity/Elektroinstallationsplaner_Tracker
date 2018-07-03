@@ -1,18 +1,29 @@
 var addDialogueView = {
-    dnName : null
-    , dnFloorCountFromBasement : null
-    , dnParentId : null
-    , dnUnit : null
-    , dnValue : null
+    // References Input-Containers
+    dnNameContainer : null
+    , dnFloorCountFromBasementContainer : null
+    , dnParentIdContainer : null
+    , dnUnitContainer : null
+    , dnValueContainer : null
 
-    , dnSubmitButton : null
-    , dnAddItem : null
+    // References Input-Fields
+    , dnNameInput: null
+    , dnFloorCountFromBasementInput: null
+    , dnParentIdInput: null
+    , dnUnitInput: null
+    , dnValueInput: null
+
+    // References PopupInfo
     , dnModalTitle : null
 
-    , currentLevelElectroInstallationsItems : null
+    // References Buttons
+    , dnSubmitButton : null
+    , dnAddItemButton : null
 
+    , currentLevelElectroInstallationsItems : null
     , currentLevel : null
 
+    // Config objects
     , configProjects : {
         name : true
     }
@@ -42,75 +53,77 @@ var addDialogueView = {
     , configCicuitBreakers: {
         name: true
     }
-    , configReset:{
-        name: true
-        , floorCountFromBasement : true
-        , parentId : true
-        , unit : true
-        , value : true
-    }
     , initDialogue : function(currentLevel, currentLevelElectroInstallationsItems){
-        this.dnName = document.getElementById("AddEdit-ItemName-Container");
-        this.dnFloorCountFromBasement = document.getElementById("AddEdit-FloorCountFromBasement-Container");
-        this.dnParentId = document.getElementById("AddEdit-ParentId-Container");
-        this.dnUnit = document.getElementById("AddEdit-Unit-Container");
-        this.dnValue = document.getElementById("AddEdit-Value-Container");
-        this.dnSubmitButton = document.getElementById("AddEdit-Submit");
-        this.dnAddItem = document.getElementById("addItem");
-        this.dnModalTitle = document.getElementById("ElectroModalTitle");
+        addDialogueView.fetchNodeReferences();
+        addDialogueView.currentLevel = currentLevel;
+        addDialogueView.currentLevelElectroInstallationsItems = currentLevelElectroInstallationsItems;
+        addDialogueView.setFieldVisibility();
+    }
+    , fetchNodeReferences: function(){
+        addDialogueView.dnNameContainer = document.getElementById("AddEdit-ItemName-Container");
+        addDialogueView.dnFloorCountFromBasementContainer = document.getElementById("AddEdit-FloorCountFromBasement-Container");
+        addDialogueView.dnParentIdContainer = document.getElementById("AddEdit-ParentId-Container");
+        addDialogueView.dnUnitContainer = document.getElementById("AddEdit-Unit-Container");
+        addDialogueView.dnValueContainer = document.getElementById("AddEdit-Value-Container");
 
-        this.dnAddItem.addEventListener("click", this.createNewEntryDialogue);
+        addDialogueView.dnNameInput = document.getElementById("AddEdit-ItemName");
+        addDialogueView.dnFloorCountFromBasementInput = document.getElementById("AddEdit-FloorCountFromBasement");
+        addDialogueView.dnParentIdInput = document.getElementById("AddEdit-ParentId");
+        addDialogueView.dnUnitInput = document.getElementById("AddEdit-Unit");
+        addDialogueView.dnValueInput = document.getElementById("AddEdit-Value");
 
-        this.currentLevel = currentLevel;
-        this.currentLevelElectroInstallationsItems = currentLevelElectroInstallationsItems;
-        this.setFieldVisibility();
+        addDialogueView.dnSubmitButton = document.getElementById("AddEdit-Submit");
+        addDialogueView.dnAddItemButton = document.getElementById("addItem");
+        addDialogueView.dnAddItemButton.addEventListener("click", this.createNewEntryDialogue);
+
+        addDialogueView.dnModalTitle = document.getElementById("ElectroModalTitle");
     }
     , setFieldVisibility : function(){
-
-        config = addDialogueView.getConfig(addDialogueView.currentLevel);
-
-        if(addDialogueView.dnName.classList.contains("invisible")){
-            addDialogueView.dnName.classList.remove("invisible");
-        }
-        if(addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")){
-            addDialogueView.dnFloorCountFromBasement.classList.remove("invisible");
-        }
-        if(addDialogueView.dnParentId.classList.contains("invisible")){
-            addDialogueView.dnParentId.classList.remove("invisible");
-        }
-        if(addDialogueView.dnUnit.classList.contains("invisible")){
-            addDialogueView.dnUnit.classList.remove("invisible");
-        }
-        if(addDialogueView.dnValue.classList.contains("invisible")){
-            addDialogueView.dnValue.classList.remove("invisible");
-        }
+        config = addDialogueView.getConfig();
+        addDialogueView.resetFieldVisibility();
 
         if (!config.name){
-            addDialogueView.dnName.classList.add("invisible");
+            addDialogueView.dnNameContainer.classList.add("invisible");
         }
         if (!config.floorCountFromBasement){
-            addDialogueView.dnFloorCountFromBasement.classList.add("invisible");
+            addDialogueView.dnFloorCountFromBasementContainer.classList.add("invisible");
         }
         if (!config.parentId){
-            addDialogueView.dnParentId.classList.add("invisible");
+            addDialogueView.dnParentIdContainer.classList.add("invisible");
         }
         if (!config.unit) {
-            addDialogueView.dnUnit.classList.add("invisible");
+            addDialogueView.dnUnitContainer.classList.add("invisible");
         }
         if (!config.value){
-            addDialogueView.dnValue.classList.add("invisible");
+            addDialogueView.dnValueContainer.classList.add("invisible");
         }
-        console.log((addDialogueView.dnFloorCountFromBasement.classList.contains("invisible")));
     }
     , resetFieldVisibility : function (){
-        addDialogueView.setFieldVisibility(addDialogueView.configReset);
+        if(addDialogueView.dnNameContainer.classList.contains("invisible")){
+            addDialogueView.dnNameContainer.classList.remove("invisible");
+        }
+        if(addDialogueView.dnFloorCountFromBasementContainer.classList.contains("invisible")){
+            addDialogueView.dnFloorCountFromBasementContainer.classList.remove("invisible");
+        }
+        if(addDialogueView.dnParentIdContainer.classList.contains("invisible")){
+            addDialogueView.dnParentIdContainer.classList.remove("invisible");
+        }
+        if(addDialogueView.dnUnitContainer.classList.contains("invisible")){
+            addDialogueView.dnUnitContainer.classList.remove("invisible");
+        }
+        if(addDialogueView.dnValueContainer.classList.contains("invisible")){
+            addDialogueView.dnValueContainer.classList.remove("invisible");
+        }
     }
     , clearFormFields : function(){
-        $("#AddEdit-ItemName").val("");
-        $("#AddEdit-FloorCountFromBasement").val("");
-        $("#AddEdit-ParentId").val("");
-        $("#AddEdit-Unit").val("");
-        $("#AddEdit-Value").val("");
+        addDialogueView.setFormFields();
+    }
+    , setFormFields : function(modelItem){
+        addDialogueView.dnNameInput.value = (typeof modelItem !== 'undefined') ? modelItem.name : "";
+        addDialogueView.dnFloorCountFromBasementInput.value = (typeof modelItem !== 'undefined') ? modelItem.floorCountFromBasement : "";
+        addDialogueView.dnParentIdInput.value = (typeof modelItem !== 'undefined') ? modelItem.parentId : "";
+        addDialogueView.dnUnitInput.value = (typeof modelItem !== 'undefined') ? modelItem.unit : "";
+        addDialogueView.dnValueInput.value = (typeof modelItem !== 'undefined') ? modelItem.value : "";
     }
     , fetchSpecificationData : function(){
         config = this.getConfig(addDialogueView.currentLevel);
@@ -123,19 +136,19 @@ var addDialogueView = {
         };
 
         if (config.name){
-            returnObject.specification.name = $("#AddEdit-ItemName").val();
+            returnObject.specification.name = addDialogueView.dnNameInput.value;
         };
         if (config.floorCountFromBasement){
-            returnObject.specification.floor_count_from_basement = $("#AddEdit-FloorCountFromBasement").val();
+            returnObject.specification.floor_count_from_basement = addDialogueView.dnFloorCountFromBasementInput.value;
         };
         if (config.parentId){
-            returnObject.parentid = $("#AddEdit-ParentId").val();
+            returnObject.parentid = addDialogueView.dnParentIdInput.value;
         };
         if (config.unit) {
-            returnObject.specification.unit = $("#AddEdit-Unit").val();
+            returnObject.specification.unit = addDialogueView.dnUnitInput.value;
         };
         if (config.value){
-            returnObject.specification.value = $("#AddEdit-Value").val();
+            returnObject.specification.value = addDialogueView.dnValueInput.value;
         };
 
         return returnObject;
@@ -163,10 +176,14 @@ var addDialogueView = {
     }
     , createNewEntryDialogue : function() {
         addDialogueView.clearFormFields();
-        $("#AddEdit-ParentId").val($(".appendedRow").attr("parentid"));
-        addDialogueView.dnSubmitButton.innerHTML = "Create Object";
-        addDialogueView.dnModalTitle. innerHTML = "Create a new Object:"
-        addDialogueView.dnSubmitButton.addEventListener("click", addDialogueView.createNewItem);
+        addDialogueView.setParentId();
+        addDialogueView.configureVariablePopupViewFeatures(
+            {
+                title: "Create a new Object:"
+                , buttonLabel: "Create Object"
+                , onButtonClicked: addDialogueView.createNewItem
+            }
+        );
     }
     , createNewItem : function(){
         newItemRequest = {
@@ -176,41 +193,41 @@ var addDialogueView = {
             , specification: null
         }
         formData = addDialogueView.fetchSpecificationData();
-        newItemRequest.parentid = formData.parentid || 0;
+        newItemRequest.parentid = (typeof formData.parentid !== 'undefined') ? formData.parentid : 0;
         newItemRequest.specification = formData.specification;
         ElectroController.createNewElement(newItemRequest);
         addDialogueView.clearFormFields();
     }
     , editExistingEntryDialogue: function(clickedEditButton){
         parentRow = clickedEditButton.closest("tr")[0];
-        clickedItemId = parentRow.getAttribute("itemId");
-
-        selectedItem = addDialogueView.findItemWithId(clickedItemId)[0];
-
-        console.log(selectedItem);
-
-        $("#AddEdit-ItemName").val(selectedItem.name);
-        $("#AddEdit-FloorCountFromBasement").val((selectedItem.floorCountFromBasement || null));
-        $("#AddEdit-ParentId").val((selectedItem.parentId || null));
-        $("#AddEdit-Unit").val((selectedItem.unit || null));
-        $("#AddEdit-Value").val((selectedItem.value || null));
-
-        addDialogueView.dnSubmitButton.innerHTML = "Update Object";
-        addDialogueView.dnModalTitle.innerHTML = "Edit an existing Object";
-        
-        addDialogueView.dnSubmitButton.addEventListener("click", function(){
-            addDialogueView.editItem(selectedItem);
-        });
+        selectedItem = addDialogueView.getItemById(parentRow.getAttribute("itemId"));
+        addDialogueView.setFormFields(selectedItem);
+        addDialogueView.configureVariablePopupViewFeatures(
+            {
+                title: "Edit an existing Object"
+                , buttonLabel: "Update Object"
+                , onButtonClicked: function(){
+                    addDialogueView.editItem(selectedItem);
+                }
+            }
+        );
     }
     , editItem: function(selectedItem){
         updateSpecificationData = addDialogueView.fetchSpecificationData().specification;
-        console.log(addDialogueView.fetchSpecificationData());
         selectedItem.update(updateSpecificationData);
         addDialogueView.clearFormFields();
     }
-    , findItemWithId: function(clickedItemId){
+    , getItemById: function(clickedItemId){
         return addDialogueView.currentLevelElectroInstallationsItems.filter(function(item){
             return item.id == clickedItemId;
-        });
+        })[0];
+    }
+    , setParentId: function(){
+        $("#AddEdit-ParentId").val($(".appendedRow").attr("parentid"));
+    }
+    , configureVariablePopupViewFeatures: function({title, buttonLabel, onButtonClicked}){
+        addDialogueView.dnSubmitButton.innerHTML = buttonLabel;
+        addDialogueView.dnModalTitle. innerHTML = title;
+        addDialogueView.dnSubmitButton.addEventListener("click", onButtonClicked);
     }
 }
