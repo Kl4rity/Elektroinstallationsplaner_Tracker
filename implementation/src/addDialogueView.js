@@ -139,7 +139,7 @@ var addDialogueView = {
             returnObject.specification.name = addDialogueView.dnNameInput.value;
         };
         if (config.floorCountFromBasement){
-            returnObject.specification.floor_count_from_basement = $addDialogueView.dnFloorCountFromBasementInput.value;
+            returnObject.specification.floor_count_from_basement = addDialogueView.dnFloorCountFromBasementInput.value;
         };
         if (config.parentId){
             returnObject.parentid = addDialogueView.dnParentIdInput.value;
@@ -226,8 +226,8 @@ var addDialogueView = {
         $("#AddEdit-ParentId").val($(".appendedRow").attr("parentid"));
     }
     , configureVariablePopupViewFeatures: function({title, buttonLabel, onButtonClicked}){
-        addDialogueView.dnSubmitButton.innerHTML = title;
-        addDialogueView.dnModalTitle. innerHTML = buttonLabel;
+        addDialogueView.dnSubmitButton.innerHTML = buttonLabel;
+        addDialogueView.dnModalTitle. innerHTML = title;
         addDialogueView.dnSubmitButton.addEventListener("click", onButtonClicked);
     }
 }
