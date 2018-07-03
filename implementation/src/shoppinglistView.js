@@ -1,10 +1,11 @@
 var shoppinglistView = {
-    getProjects: function (lsItems) {
-        $.each(lsItems, function (index, value) {
-            console.log(value);
-            var projectName = value.name;
+    buildProjects: function (slItems) {
+        $.each(slItems, function (index, value) {
+            var projectName = value;
             var projectNameItem = "<tr itemId=" + value.id + "> <td>" + projectName + "</td></tr>";
             $(".shoppingList").prepend(projectNameItem);
         })
     }
 }
+
+//shoppinglist Controller erstellen. DIeser macht 2 Ajax Abfragen (1x Projektname, 1x Get Shoppinglist)

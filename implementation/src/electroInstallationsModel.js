@@ -154,6 +154,7 @@ class electroInstallationItem {
             this.updatePostRequest.specification = specification;
             this.ajaxRequest(this.updatePostRequest);
         }
+
     }
 }
 
