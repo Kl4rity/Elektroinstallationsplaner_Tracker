@@ -4,7 +4,7 @@
 }
 
 .sidebar {
-    background-color: blue;
+    background-color: red;
     position:fixed;
     height:100%;
     left:0px;
@@ -141,4 +141,8 @@
     .sidebar{
         display: none;
     }
+}
+
+.blue {
+    color: blue;
 }
