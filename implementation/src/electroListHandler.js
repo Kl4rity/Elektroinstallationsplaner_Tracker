@@ -1,6 +1,6 @@
 var electroListHandler = {
     buildList: function (lsItems, listtype, parentid) {
-
+        $("#shoppingListBtn").unbind();
         $(".appendedRow").empty();
 
         $(".appendedRow").attr("listtype", listtype);
@@ -46,9 +46,11 @@ var electroListHandler = {
                 $(".appendedRow").prepend(listItem);
         }
         this.showStageTitle(listtype); 
+
         $("#shoppingListBtn").click(function () {
+            var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
             switchView("pageShoppingList");
-            shoppinglistView.getProjects();
+            shoppinglistController.fetchData(projectsRequest);
         });
     }
 
@@ -78,3 +80,4 @@ var electroListHandler = {
         console.log(projectTitle);
     }
 }
+
