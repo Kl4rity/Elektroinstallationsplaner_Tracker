@@ -5,9 +5,15 @@
 
 .sidebar {
     background-color: rgb(124, 198, 214);
+<<<<<<< HEAD
     position:fixed;
     height:100%;
     left:0px;
+=======
+    position: fixed;
+    height: 100%;
+    left: 0px;
+>>>>>>> blue
     text-align: center;
     color: white;
     padding-top: 20px;
