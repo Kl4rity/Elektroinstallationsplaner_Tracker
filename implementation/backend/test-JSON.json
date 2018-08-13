@@ -4,6 +4,11 @@
 }
 
 {
+        "action": "get-circuitplan",
+        "parentid": 1
+}
+
+{
 	"action": "delete",
 	"listtype": "FLOORS",
 	"itemid": 9
