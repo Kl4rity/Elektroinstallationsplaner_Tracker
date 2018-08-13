@@ -6,11 +6,6 @@
  */
 class CircuitBreaker extends ElectricModelItem {
     //put your code here
-    
-    protected function getList($parentId) {
-        $sql = " SELECT * FROM " . $this->tableNameString;
-        return $this->database->query($sql);
-    }
 
     public function create($parentId, $specification) {
         $sql = " INSERT INTO " . $this->tableNameString . "('name') VALUES ('" . $specification->name . "')";
