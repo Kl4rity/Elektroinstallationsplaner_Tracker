@@ -12,6 +12,7 @@ include "models/Project.php";
 include "models/Room.php";
 include "models/Sensor.php";
 include "models/ShoppingList.php";
+include "models/CircuitPlan.php";
 
 define ("DBHost", "localhost");
 define ("DBName", "uebung3");
