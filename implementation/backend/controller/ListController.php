@@ -6,6 +6,30 @@
 class ListController {
    
     private $jsonView;
+    private $validTables = 
+    [
+        "PROJECTS"
+        ,"FLOORS"
+        ,"ROOMS"
+        ,"DEVICES"
+        ,"SENSORS"
+        ,"FUSES"
+        ,"CIRCUITBREAKERS"
+    ];
+
+    private $validTableActions =
+    [
+        "GETLIST"
+        , "CREATE"
+        , "UPDATE"
+        , "DELETE"
+    ];
+
+    private $validComplexActions = 
+    [
+        "GET-SHOPPINGLIST"
+        , "GET-CIRCUITPLAN"
+    ];
    
     public function __construct() {
         $this->jsonView = new JsonView();
@@ -13,41 +37,24 @@ class ListController {
     
     public function route(){          
         $postData = $this->validatePostData(json_decode(filter_input(INPUT_POST, 'data')));
-        if (strtoupper($postData->action) != "GET-SHOPPINGLIST"){
-            $responsibleModelInstance = $this->fetchResponsibleModelInstance($postData->listtype);
-        } else {
-            $responsibleModelInstance = new ShoppingList();
+
+        if (in_array(strtoupper($postData->action), $this->validTableActions)){
+            $responsibleModelInstance = $this->fetchResponsibleTableModelInstance($postData->listtype);
+        } else if (in_array(strtoupper($postData->action), $this->validComplexActions)) {
+            $responsibleModelInstance = $this->fetchResponsibleComplexActionInstance($postData->action);
         }
+
         $dbResponseData = $responsibleModelInstance->executeRequest($postData);
         $this->jsonView->streamOutput($dbResponseData);
     }
     
     private function validatePostData($postData){
-       $validTables = 
-                [
-                    "PROJECTS"
-                    ,"FLOORS"
-                    ,"ROOMS"
-                    ,"DEVICES"
-                    ,"SENSORS"
-                    , "FUSES"
-                    , "CIRCUITBREAKERS"
-                ];
-       
-       $validActions =
-                [
-                    "GETLIST"
-                    , "CREATE"
-                    , "UPDATE"
-                    , "DELETE"
-                    , "GET-SHOPPINGLIST"
-                ];
         
-       $actionIsValid = in_array(strtoupper($postData->action), $validActions);
+       $actionIsValid = (in_array(strtoupper($postData->action), $this->validTableActions) || in_array(strtoupper($postData->action), $this->validComplexActions));
        
-       if (strtoupper($postData->listtype) != "GET-SHOPPINGLIST"){
-           $listTypeIsValid = in_array(strtoupper($postData->listtype), $validTables);
-       } else {
+       if (in_array(strtoupper($postData->action), $this->validTableActions)){
+           $listTypeIsValid = in_array(strtoupper($postData->listtype), $this->validTables);
+       } else if (in_array(strtoupper($postData->action), $this->validComplexActions)) {
            $listTypeIsValid = true;
        } 
 
@@ -58,7 +65,7 @@ class ListController {
        return $postData;
     }
     
-    private function fetchResponsibleModelInstance($listtype){
+    private function fetchResponsibleTableModelInstance($listtype){
         switch(strtoupper($listtype)):
             case "PROJECTS":
                 return new Project("projects", "NONE","floors");
@@ -73,7 +80,7 @@ class ListController {
             case "FUSES":
                 return new Fuse("fuses", "circuit_breakers_id" ,"rooms");
             case "CIRCUITBREAKERS":
-                return new CircuitBreaker("circuit_breakers", "NONE", "fuses");
+                return new CircuitBreaker("circuit_breakers", "projects_id", "fuses");
             case "ERROR":
                 echo("Uh-oh, what happened? We encountered an error with the operation you are trying to execute or the table you are trying to execute it on.");
                 break;
@@ -82,4 +89,13 @@ class ListController {
                 break;
         endswitch;
     }    
+
+    private function fetchResponsibleComplexActionInstance($action) {
+        switch(strtoupper($action)):
+            case "GET-SHOPPINGLIST":
+                return new ShoppingList();
+            case "GET-CIRCUITPLAN":
+                return new CircuitPlan();
+        endswitch;
+    }
 }
