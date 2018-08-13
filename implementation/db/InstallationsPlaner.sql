@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 27, 2018 at 11:41 AM
+-- Generation Time: Aug 13, 2018 at 03:10 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.0.28
 
@@ -30,10 +30,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `circuit_breakers` (
   `id` int(11) UNSIGNED NOT NULL,
+  `projects_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_changed` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `circuit_breakers`
+--
+
+INSERT INTO `circuit_breakers` (`id`, `projects_id`, `name`, `created`, `last_changed`) VALUES
+(1, 1, 'Main Breaker', '2018-08-13 11:26:25', NULL),
+(2, 1, 'Secondary Breaker', '2018-08-13 11:26:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -55,8 +64,9 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`id`, `rooms_id`, `fuses_id`, `name`, `created`, `last_change`) VALUES
-(1, 1, 0, 'Licht', '2018-04-17 14:21:04', NULL),
-(2, 1, 0, 'Rollo', '2018-04-17 14:21:04', NULL);
+(1, 1, 1, 'Licht', '2018-04-17 14:21:04', NULL),
+(2, 1, 1, 'Rollo', '2018-04-17 14:21:04', NULL),
+(3, 1, 2, 'Licht', '2018-04-17 14:21:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,18 @@ INSERT INTO `floors` (`id`, `projects_id`, `floor_count_from_basement`, `name`, 
 (3, 1, 2, 'zweiter Stock 3', '2018-04-17 14:11:07', NULL),
 (4, 2, 1, 'Tiefgarage 28', '2018-04-17 14:11:07', NULL),
 (19, 1, 1, 'Erdgeschoss 2', '2018-05-29 13:45:47', NULL),
-(20, 0, 2, 'Gebäude 1201 Wien', '2018-06-20 15:45:06', NULL);
+(20, 0, 2, 'Gebäude 1201 Wien', '2018-06-20 15:45:06', NULL),
+(21, 0, 2, 'Kuckuck', '2018-06-27 10:52:10', NULL),
+(22, 0, 3, 'Hola', '2018-06-27 10:54:46', NULL),
+(23, 0, 2, 'Hola.', '2018-06-27 10:55:01', NULL),
+(24, 0, 1, 'Kuckuck', '2018-06-27 10:55:59', NULL),
+(25, 0, 2, 'Kuckuck', '2018-06-27 10:56:11', NULL),
+(26, 0, 2, 'Kuckuck', '2018-06-27 10:58:46', NULL),
+(27, 1, 2, 'Kuckuck', '2018-06-27 10:59:12', NULL),
+(29, 2, 2, 'Kuckuck 2', '2018-06-27 12:31:40', '2018-06-29 16:53:38'),
+(31, 2, 0, 'Up arrow nach links. Still works?', '2018-06-29 16:55:52', '2018-07-03 09:26:05'),
+(32, 2, 0, 'Weiß hinterlegte Navbar für aktives Element.', '2018-06-29 17:04:29', NULL),
+(33, 2, 2, 'Kuckuck 72', '2018-07-03 09:51:03', '2018-07-03 12:46:17');
 
 -- --------------------------------------------------------
 
@@ -96,6 +117,16 @@ CREATE TABLE `fuses` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_changed` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `fuses`
+--
+
+INSERT INTO `fuses` (`name`, `circuit_breakers_id`, `id`, `created`, `last_changed`) VALUES
+('Küche', 1, 1, '2018-08-13 11:27:19', NULL),
+('Bad', 1, 2, '2018-08-13 11:27:19', NULL),
+('Modelleisenbahnzimmer', 2, 3, '2018-08-13 11:27:50', NULL),
+('Mario Kart Zimmer', 2, 4, '2018-08-13 11:27:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -115,8 +146,8 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `name`, `created`, `last_change`) VALUES
-(1, 'My House', '2018-04-17 14:10:04', NULL),
-(2, 'Hola 59', '2018-04-17 14:10:04', NULL);
+(1, '', '2018-04-17 14:10:04', '2018-08-13 11:29:30'),
+(2, 'Hola 62', '2018-04-17 14:10:04', '2018-07-03 12:39:47');
 
 -- --------------------------------------------------------
 
@@ -137,7 +168,7 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `floors_id`, `name`, `created`, `last_change`) VALUES
-(1, 1, 'gesamter Keller', '2018-04-17 14:14:24', NULL),
+(1, 3, 'gesamter Keller', '2018-04-17 14:14:24', NULL),
 (2, 2, 'Stiegenhaus', '2018-04-17 14:14:24', NULL),
 (3, 2, 'Vorzimmer', '2018-04-17 14:14:24', NULL),
 (4, 2, 'WC', '2018-04-17 14:14:24', NULL),
@@ -173,7 +204,13 @@ INSERT INTO `rooms` (`id`, `floors_id`, `name`, `created`, `last_change`) VALUES
 (36, 8, 'Biologiesaal', '2018-04-17 14:18:51', NULL),
 (37, 8, 'Phyisksaal', '2018-04-17 14:18:51', NULL),
 (38, 8, 'Zeichensaal', '2018-04-17 14:18:51', NULL),
-(39, 8, 'Aufenthaltsraum', '2018-04-17 14:18:51', NULL);
+(39, 8, 'Aufenthaltsraum', '2018-04-17 14:18:51', NULL),
+(40, 19, 'Kuckuck', '2018-06-27 12:20:30', NULL),
+(41, 19, 'Hola', '2018-06-27 12:21:38', NULL),
+(42, 27, 'Hola.', '2018-06-27 12:25:59', NULL),
+(43, 4, 'TestDingens 44', '2018-06-27 12:34:22', NULL),
+(47, 29, 'dsadas', '2018-06-27 13:15:20', NULL),
+(48, 27, 'dad', '2018-06-27 13:26:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -198,7 +235,9 @@ CREATE TABLE `sensors` (
 INSERT INTO `sensors` (`id`, `devices_id`, `name`, `unit`, `value`, `created`, `last_change`) VALUES
 (1, 1, 'Lichtschalter', 'EIN / AUS', 'EIN', '2018-04-17 14:21:47', NULL),
 (2, 1, 'Helligkeitssensor', 'Lumen', NULL, '2018-04-17 14:21:47', NULL),
-(5, 2, 'Helligkeitssensor', 'Lumen', NULL, '2018-04-17 14:23:08', NULL);
+(5, 2, 'Helligkeitssensor', 'Lumen', NULL, '2018-04-17 14:23:08', NULL),
+(6, 3, 'Lichtschalter', 'EIN / AUS', 'EIN', '2018-04-17 14:21:47', NULL),
+(7, 3, 'Helligkeitssensor', 'Lumen', NULL, '2018-04-17 14:21:47', NULL);
 
 --
 -- Indexes for dumped tables
@@ -254,25 +293,25 @@ ALTER TABLE `sensors`
 -- AUTO_INCREMENT for table `circuit_breakers`
 --
 ALTER TABLE `circuit_breakers`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `floors`
 --
 ALTER TABLE `floors`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `fuses`
 --
 ALTER TABLE `fuses`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -284,13 +323,13 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `sensors`
 --
 ALTER TABLE `sensors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
