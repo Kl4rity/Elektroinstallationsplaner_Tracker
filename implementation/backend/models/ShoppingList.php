@@ -29,12 +29,12 @@ class ShoppingList implements iPostRequestExecutor {
     }
     
     private function getDevices($projectId) {
-        $sql = "SELECT * FROM `devices` WHERE rooms_id IN (SELECT id FROM floors WHERE projects_id = ". $projectId .");";
+        $sql = "SELECT * FROM `devices` WHERE rooms_id IN (SELECT id FROM rooms WHERE floors_id IN (SELECT id FROM floors WHERE projects_id = ". $projectId ."));";
         return $this->database->query($sql);
     }
     
     private function getSensors($projectId) {
-        $sql = "SELECT * FROM `sensors` WHERE devices_id IN (SELECT id FROM rooms WHERE floors_id IN (SELECT id FROM floors WHERE projects_id = ". $projectId ."));";
+        $sql = "SELECT * FROM `sensors` WHERE devices_id IN (SELECT id FROM `devices` WHERE rooms_id IN (SELECT id FROM rooms WHERE floors_id IN (SELECT id FROM floors WHERE projects_id = ". $projectId .")));";
         return $this->database->query($sql);  
     }
     
@@ -74,13 +74,17 @@ class ShoppingList implements iPostRequestExecutor {
     }
     
     private function collapseDuplicateShoppingListItems($shoppingList){
-        foreach($shoppingList as $comparisonSourceEntry){
-            foreach($shoppingList as $comparisonTargetEntry){
-                if(empty(array_diff($comparisonSourceEntry, $comparisonTargetEntry))){
-                    $shoppingList[$comparisonSourceEntry]["count"] += 1;
-                    unset($shoppingList[$comparisonTargetEntry]);
-                };
+        $i=0;
+        while($i < count($shoppingList)){
+            $c = $i+1;
+            while($c < count($shoppingList)){
+                if(empty(array_diff($shoppingList[$i], $shoppingList[$c]))){
+                    $shoppingList[$i]["count"] += 1;
+                    $removed_elements = array_splice($shoppingList, $c, 1);
+                }
+                $c++;
             }
+            $i++;
         }
         return $shoppingList;
     }
