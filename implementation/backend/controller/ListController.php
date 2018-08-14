@@ -14,7 +14,7 @@ class ListController {
         ,"DEVICES"
         ,"SENSORS"
         ,"FUSES"
-        ,"CIRCUITBREAKERS"
+        ,"CIRCUIT_BREAKERS"
     ];
 
     private $validTableActions =
@@ -78,8 +78,8 @@ class ListController {
             case "SENSORS":
                 return new Sensor("sensors","devices_id", "NONE");
             case "FUSES":
-                return new Fuse("fuses", "circuit_breakers_id" ,"rooms");
-            case "CIRCUITBREAKERS":
+                return new Fuse("fuses", "circuit_breakers_id" ,"NONE");
+            case "CIRCUIT_BREAKERS":
                 return new CircuitBreaker("circuit_breakers", "projects_id", "fuses");
             case "ERROR":
                 echo("Uh-oh, what happened? We encountered an error with the operation you are trying to execute or the table you are trying to execute it on.");
