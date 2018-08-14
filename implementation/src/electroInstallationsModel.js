@@ -129,7 +129,6 @@ class electroInstallationItem {
             this.updatePostRequest.specification = specification;
             queryService.createUpdateDeleteQuery(this.updatePostRequest);
         }
-
     }
 }
 
@@ -178,11 +177,15 @@ class Sensor extends electroInstallationItem {
 class CircuitBreaker extends electroInstallationItem {
     constructor(itemData, currentLevel, nextLevel){
         super(itemData, currentLevel, nextLevel);
+
+        this.parentId = itemData.projects_id;
     }
 }
 
 class Fuse extends electroInstallationItem {
     constructor(itemData, currentLevel, nextLevel){
         super(itemData, currentLevel, nextLevel);
+
+        this.parentId = itemData.circuit_breakers_id;
     }
 }

@@ -55,6 +55,7 @@ var addDialogueView = {
     }
     , configCicuitBreakers: {
         name: true
+        , parentId : true
     }
     , initDialogue : function(currentLevel, currentLevelElectroInstallationsItems){
         addDialogueView.fetchNodeReferences();
