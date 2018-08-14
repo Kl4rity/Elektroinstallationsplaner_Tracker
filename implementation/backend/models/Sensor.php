@@ -14,7 +14,7 @@
 class Sensor extends ElectricModelItem {
     //put your code here
     public function create($parentId, $specification) {
-        $sql = " INSERT INTO " . $this->tableNameString . "(".$this->parentIdTypeString.", name, unit, value) VALUES (". $parentId . " , '" . $specification->name . "', " . $specification->unit .", " . $specification->value . ")";
+        $sql = " INSERT INTO " . $this->tableNameString . "(".$this->parentIdTypeString.", name, unit, value) VALUES (". $parentId . " , '" . $specification->name . "', '" . $specification->unit ."', '" . $specification->value . "')";
         return $this->database->query($sql);
     }
 

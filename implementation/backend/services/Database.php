@@ -14,6 +14,9 @@ class Database extends PDO{
 
     public function query( $sql){        
         try{
+
+            // var_dump($sql);
+
             $queryResult = $this->pdo->query($sql)->fetchAll();
 
             if(!$queryResult){
