@@ -11,5 +11,6 @@ var ElectroController = {
 $(document).ready(function(){
     $("#backButton").click(ElectroController.onBackButton);
     $("#main-logo").click(ElectroController.onLogo);
+    addDialogueView.setCleanupEventListener();
     queryService.loadNewView(ElectroController.startPage);
 });

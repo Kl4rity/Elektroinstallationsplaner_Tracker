@@ -1,6 +1,9 @@
 var addDialogueView = {
+    // Complete Modal Container
+    dnFullAddEditModalContainer: null
+
     // References Input-Containers
-    dnNameContainer : null
+    , dnNameContainer : null
     , dnFloorCountFromBasementContainer : null
     , dnParentIdContainer : null
     , dnUnitContainer : null
@@ -59,7 +62,16 @@ var addDialogueView = {
         addDialogueView.currentLevelElectroInstallationsItems = currentLevelElectroInstallationsItems;
         addDialogueView.setFieldVisibility();
     }
+    , setCleanupEventListener: function(){
+        $("#exampleModalCenter").on("hide.bs.modal", function(e){
+            $("#AddEdit-Submit").off("click");
+            console.log("Ran cleanup loop on " + $("#AddEdit-Submit")); 
+        })
+    }
     , fetchNodeReferences: function(){
+        //Has to be JQuery for the Bootstrap functionality to work.
+        addDialogueView.dnFullAddEditModalContainer = $("#exampleModalCenter");
+
         addDialogueView.dnNameContainer = document.getElementById("AddEdit-ItemName-Container");
         addDialogueView.dnFloorCountFromBasementContainer = document.getElementById("AddEdit-FloorCountFromBasement-Container");
         addDialogueView.dnParentIdContainer = document.getElementById("AddEdit-ParentId-Container");
@@ -195,7 +207,8 @@ var addDialogueView = {
         formData = addDialogueView.fetchSpecificationData();
         newItemRequest.parentid = (typeof formData.parentid !== 'undefined') ? formData.parentid : 0;
         newItemRequest.specification = formData.specification;
-        ElectroController.createNewElement(newItemRequest);
+        console.log(newItemRequest);
+        queryService.createUpdateDeleteQuery(newItemRequest);
         addDialogueView.clearFormFields();
     }
     , editExistingEntryDialogue: function(clickedEditButton){
@@ -208,6 +221,7 @@ var addDialogueView = {
                 , buttonLabel: "Update Object"
                 , onButtonClicked: function(){
                     addDialogueView.editItem(selectedItem);
+                    console.log(selectedItem);
                 }
             }
         );
@@ -228,6 +242,9 @@ var addDialogueView = {
     , configureVariablePopupViewFeatures: function({title, buttonLabel, onButtonClicked}){
         addDialogueView.dnSubmitButton.innerHTML = buttonLabel;
         addDialogueView.dnModalTitle. innerHTML = title;
-        addDialogueView.dnSubmitButton.addEventListener("click", onButtonClicked);
+        $("#AddEdit-Submit").on("click", function(){
+            onButtonClicked();
+            addDialogueView.dnFullAddEditModalContainer.modal("hide");
+        });
     }
 }
