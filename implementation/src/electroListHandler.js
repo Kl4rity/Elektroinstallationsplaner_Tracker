@@ -52,16 +52,6 @@ var electroListHandler = {
             shoppinglistController.fetchData(projectsRequest);
         });
     }
-
-    , showDetails: function () {
-        console.log("clicked");
-    }
-
-    , editRow: function () {
-        console.log("Seas!");
-
-    }
-
     , createItem: function () {
         var itemData = 5;
         var currentLevel = 1;
