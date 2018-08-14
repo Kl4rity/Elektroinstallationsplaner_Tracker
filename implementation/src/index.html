@@ -33,20 +33,23 @@
         <div class="col-3 sidebar">
             <h1 id="main-logo">ELECTRIC</h1>
             <div class="navigation">
-                <h3>1. Planning</h3>
+                <h3 id="projectSelectionHook" class="activeSidebarLink">1. Planning</h3>
                     <ul>
                         <li class="Floor stage">Floors</li>
                         <li class="Room stage">Rooms</li>
                         <li class="Loader stage">Devices</li>
                         <li class="Sensor stage">Sensors</li>
                     </ul>
-                <h3>2. Circuitry</h3>
+                <h3 id="circuitBreakerHook">2. Circuitry</h3>
                     <ul>
-                        <li>Circuit Breakers</li>
-                        <li>Fuses</li>
-                        <li>Wiring Up</li>
+                        <li class="CircuitBreaker stage">Circuit Breakers</li>
+                        <li class="Fuse stage">Fuses</li>
                     </ul>
-                <h3>3. Report</h3>
+                <h3 id="wiringUpHook" >3. Wiring Up</h3>
+                    <ul>
+                        <li class="Wiring stage">Wiring Up</li>
+                    </ul>
+                <h3>4. Report</h3>
                     <ul>
                         <li><button type="button" class="reportButton" id="shoppingListBtn">Shoppinglist</button></li>
                         <li><button type="button" class="reportButton circuitBtn" id="shoppingListBtn">Circuit Plan</button></li>
@@ -54,7 +57,7 @@
             </div>
             <div class="copyright navigation">
                 <p>
-                    Logo Copyrights:
+                    Icon Copyrights:
                 </p>
                 <p>
                     <a href="https://www.flaticon.com/free-icon/chevron-up_25216">Back-Button: Chevron-up</a>

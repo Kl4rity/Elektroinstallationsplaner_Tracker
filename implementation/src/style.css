@@ -9,15 +9,31 @@
     height:100%;
     left:0px;
     text-align: center;
-    color: white;
     padding-top: 20px;
     padding-right: 0px;
+}
+
+.sidebar h1 {
+    color: white;
+}
+
+.activeSidebarLink {
+    color: white;
+    text-emphasis: NaNem;
+    text-underline-position: right;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+.activeSidebarLink + ul {
+    color: white;
 }
 
 .copyright {
     position: fixed;
     bottom: 20px;
     text-align:center; 
+    color: white;
 }
 
 .copyright a {
@@ -29,6 +45,7 @@
 
 .copyright p {
     margin: 0px;
+    color: white;
 }
 
 .mainView {
@@ -49,12 +66,16 @@
 .navigation {
     text-align:left;
     padding-left: 40px;
-
+    color: rgb(226, 226, 226);
 }
 
 .navigation ul {
     list-style-type: none;
     font-size: 18px; 
+}
+
+.navigation li {
+    padding: 3px;
 }
 
 .list-group-item.active {
@@ -158,4 +179,9 @@
     .sidebar{
         display: none;
     }
+}
+
+.currentlyActiveElement {
+    background: white; 
+    color: rgb(124, 198, 214);
 }
