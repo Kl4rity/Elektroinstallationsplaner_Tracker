@@ -14,6 +14,23 @@
     padding-right: 0px;
 }
 
+.copyright {
+    position: fixed;
+    bottom: 20px;
+    text-align:center; 
+}
+
+.copyright a {
+    font-size: 8px;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
+.copyright p {
+    margin: 0px;
+}
+
 .mainView {
     right:0px;
     position:fixed;
@@ -141,8 +158,4 @@
     .sidebar{
         display: none;
     }
-}
-
-.blue {
-    color: blue;
 }
