@@ -15,7 +15,7 @@ class Database extends PDO{
     public function query( $sql){        
         try{
             $queryResult = $this->pdo->query($sql)->fetchAll();
-            
+
             if(!$queryResult){
                 if(strpos($sql, "INSERT") !== false){
                     $queryResult = array(

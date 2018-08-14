@@ -20,7 +20,7 @@ class Project extends ElectricModelItem {
     }
 
     public function create($parentId, $specification) {
-        $sql = " INSERT INTO " . $this->tableNameString . "('name') VALUES ('" . $specification->name . "')";
+        $sql = " INSERT INTO " . $this->tableNameString . " (name) VALUES ('" . $specification->name . "')";
         return $this->database->query($sql);
     }
 
