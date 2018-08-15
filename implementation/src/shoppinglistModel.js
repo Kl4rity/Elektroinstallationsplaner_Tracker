@@ -5,3 +5,11 @@ var createShoppinglistItem = function (data) {
     };
     return slItems;
 }
+
+var createShoppinglistDevice = function (data) {
+    slDevice = [];
+    for (var i = 0; i < data.data.length; i++) {
+        slDevice.push(data.shoppinglist[i].devicename);
+    };
+    return slDevice;
+}
