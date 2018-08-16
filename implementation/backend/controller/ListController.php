@@ -70,7 +70,7 @@ class ListController {
     private function fetchResponsibleTableModelInstance($listtype){
         switch(strtoupper($listtype)):
             case "PROJECTS":
-                return new Project("projects", "NONE","NONE");
+                return new Project("projects", "NONE","BREAK");
             case "FLOORS":
                 return new Floor("floors","projects_id", "rooms");
             case "ROOMS":
