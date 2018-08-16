@@ -65,7 +65,7 @@ var createElektroInstallationsItems = function (responseData){
                     break;
     
                 case "devices":
-                    lsItems.push(new Device(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
+                    lsItems.push(new Loader(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
                     break;
     
                 case "sensors":
