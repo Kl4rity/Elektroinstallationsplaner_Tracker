@@ -2,7 +2,7 @@ var sidebarView = {
     projectId : null
 
     , chooseStage: function (stageName) {
-        var stages = ["floors", "rooms", "devices", "sensors", "circuit_breakers", "fuses", "wiring"];
+        var stages = ["projects", "floors", "rooms", "devices", "sensors", "circuit_breakers", "fuses", "wiring"];
         for (i = 0; i < stages.length; i++) {
             if (stageName == stages[i]) {
                 $("." + stageName).addClass("currentlyActiveElement");
@@ -13,31 +13,26 @@ var sidebarView = {
     }
 
     , handleChangeOfView : function(requestObject){
-        if (requestObject.listtype == "floors"){
-            sidebarView.projectId = requestObject.parentid;
-            sidebarView.attachLinkToCircuitBreakerHook();
-            sidebarView.attachLinkToPlanningHook();
-        }
         if (requestObject.listtype == "projects"){
             sidebarView.projectId = null;
-            sidebarView.removeLinkFromCircuitBreakerHook();
-            sidebarView.removeLinkFromPlanningHook();
+            sidebarView.removeLinksNeedingProjectId();
         }
 
         if (sidebarView.projectId == null) {
-            sidebarView.removeLinkFromWiringUpHook();
-            sidebarView.removeLinkFromReportingHook();
+            sidebarView.removeLinksNeedingDevicesAndFuses();
         } else {
+            sidebarView.setLinksNeedingProjectId();
             queryService.checkStatusQuery({parentid: sidebarView.projectId, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
         }
     }
+    , setProjectsId(id){
+        sidebarView.projectId = id;
+    }
     , wiringStatusObserver : function(data){
         if (data.hasDevicesAndFuses){
-            sidebarView.attachLinkToWiringUpHook();
-            sidebarView.attachLinkToReportingHook();
+            sidebarView.setLinksNeedingDevicesAndFuses();
         } else {
-            sidebarView.removeLinkFromWiringUpHook();
-            sidebarView.removeLinkFromWiringUpHook();
+            sidebarView.removeLinksNeedingDevicesAndFuses();
         }
     }
     , attachLinkToPlanningHook : function(){
@@ -81,5 +76,21 @@ var sidebarView = {
     , removeLinkFromCircuitBreakerHook : function(){
         $("#circuitBreakerHook").off("click");
         $("#circuitBreakerHook").removeClass("activeSidebarLink");
+    }
+    , setLinksNeedingProjectId : function(){
+        sidebarView.attachLinkToCircuitBreakerHook();
+        sidebarView.attachLinkToPlanningHook();
+    }
+    , removeLinksNeedingProjectId : function (){
+        sidebarView.removeLinkFromCircuitBreakerHook();
+        sidebarView.removeLinkFromPlanningHook();
+    }
+    , setLinksNeedingDevicesAndFuses : function(){
+        sidebarView.attachLinkToWiringUpHook();
+        sidebarView.attachLinkToReportingHook();
+    }
+    , removeLinksNeedingDevicesAndFuses : function(){
+        sidebarView.removeLinkFromWiringUpHook();
+        sidebarView.removeLinkFromReportingHook();
     }
 }

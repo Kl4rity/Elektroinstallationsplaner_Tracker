@@ -128,6 +128,7 @@ class electroInstallationItem {
 
         this.fetchChildrenPostRequest = {
             action : "getlist"
+            , sourceLevel : currentLevel
             , listtype : nextLevel
             , parentid : this.id
         }

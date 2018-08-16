@@ -7,6 +7,13 @@ var queryService = {
         //pass Data to SidebarView
         sidebarView.handleChangeOfView(requestObject);
 
+        //Intercepting the fetchChildren Request when it comes from the projects page.
+        if(requestObject.sourceLevel){
+            if (requestObject.sourceLevel.toLowerCase() == "projects"){
+                sidebarView.setProjectsId(requestObject.parentid);
+            }
+        }
+
         if(!Object.is(requestObject, queryService.queryHistory[queryService.queryHistory.length -1])){
             queryService.queryHistory.push(requestObject);
         }
