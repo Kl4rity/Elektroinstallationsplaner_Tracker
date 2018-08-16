@@ -1,16 +1,8 @@
 var sidebarView = {
     projectId : null
 
-    , highlightStage: function (lsItems) {
-        $.each(lsItems, function (index, value) {
-            stageName = value.constructor.name;
-            console.log(stageName);
-        })
-        this.chooseStage(stageName);
-    }
-
     , chooseStage: function (stageName) {
-        var stages = ["Floor", "Room", "Loader", "Sensor", "CircuitBreaker", "Fuse", "Wiring"];
+        var stages = ["floors", "rooms", "devices", "sensors", "circuit_breakers", "fuses", "wiring"];
         for (i = 0; i < stages.length; i++) {
             if (stageName == stages[i]) {
                 $("." + stageName).addClass("currentlyActiveElement");
@@ -30,11 +22,11 @@ var sidebarView = {
             sidebarView.removeLinkFromCircuitBreakerHook();
         }
 
-        if (sidebarView.projectId === null) {
+        if (sidebarView.projectId == null) {
             sidebarView.removeLinkFromWiringUpHook();
             sidebarView.removeLinkFromReportingHook();
         } else {
-            queryService.checkStatusQuery({parentid: requestObject.parentid, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
+            queryService.checkStatusQuery({parentid: sidebarView.projectId, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
         }
     }
     , wiringStatusObserver : function(data){
@@ -60,7 +52,7 @@ var sidebarView = {
     }
     , attachLinkToWiringUpHook : function(){
         $("#wiringUpHook").on("click", function(){
-            queryService.loadNewView({action : "getlist" , listtype : "CIRCUIT_BREAKERS" , parentid : sidebarView.projectId});
+            queryService.loadNewView({action : "get-wiringdata" , listtype : "Wiring" , parentid : sidebarView.projectId});
         });
         $("#wiringUpHook").addClass("activeSidebarLink");
     }
