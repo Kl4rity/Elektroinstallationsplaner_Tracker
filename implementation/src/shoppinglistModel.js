@@ -3,11 +3,7 @@ var createShoppinglistItem = function (data) {
     slItems = [];
     for (var i = 0; i < data.data.length; i++) {
         var name = data.data[i].name;
-        //var id = data.data[i].id;
         slItems[i] = name;
-        //slItems[i] = id;
-       // slItems.push(data.data[i].name);
-       // slItems.push(data.data[i].id);
     };
     return slItems;
 }
@@ -15,8 +11,8 @@ var createShoppinglistItem = function (data) {
 var createShoppinglistDevice = function (data) {
     slDevice = [];
     for (var i = 0; i < data.data.length; i++) {
-        slDevice.push(data.shoppinglist[i].devicename);
-        slDevice.push(data.shoppinglist[i].count);
+        var device = data.shoppinglist[i].devicename;
+        slDevice[i] = device;
     };
     return slDevice;
 }

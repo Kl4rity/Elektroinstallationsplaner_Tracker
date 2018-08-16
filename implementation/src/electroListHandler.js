@@ -8,12 +8,6 @@ var electroListHandler = {
 
         if(lsItems.length >= 1){
             $.each(lsItems, function (index, value) {
-
-<<<<<<< HEAD
-                // console.log(value);
-=======
-                //console.log(value);
->>>>>>> blue
     
                 objectName = value.constructor.name.toUpperCase();
                 floorName = value.name;
