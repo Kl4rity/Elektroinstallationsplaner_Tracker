@@ -64,4 +64,21 @@ var queryService = {
         });
         queryService.reloadQueryAtTopOfStack();
     }
+    , checkStatusQuery : function({action, parentid, successFunction}){
+        requestObject = {"action": action, "parentid" : parentid}
+
+        $.ajax({
+            url: queryService.currentBackendAddress,
+            type: "post",
+            data: {data: JSON.stringify(requestObject)},
+            dataType: "json",
+            cache: false,
+            success: function(data){
+                successFunction(data);
+            },
+            error: function(data){
+                console.log("ERROR\n" + data);
+            }
+        });
+    }
 }
