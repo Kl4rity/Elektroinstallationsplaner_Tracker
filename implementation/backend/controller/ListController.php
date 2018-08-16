@@ -30,6 +30,7 @@ class ListController {
         "GET-SHOPPINGLIST"
         , "GET-CIRCUITPLAN"
         , "GET-WIRINGSTATUS"
+        , "GET-WIRINGDATA"
     ];
    
     public function __construct() {
@@ -99,6 +100,8 @@ class ListController {
                 return new CircuitPlan();
             case "GET-WIRINGSTATUS":
                 return new ProjectStatus();
+            case "GET-WIRINGDATA":
+                return new WiringUp();
         endswitch;
     }
 }
