@@ -15,6 +15,7 @@ include "models/ShoppingList.php";
 include "models/CircuitBreaker.php";
 include "models/Fuse.php";
 include "models/CircuitPlan.php";
+include "models/StatusQueries.php";
 
 define ("DBHost", "localhost");
 define ("DBName", "uebung3");
