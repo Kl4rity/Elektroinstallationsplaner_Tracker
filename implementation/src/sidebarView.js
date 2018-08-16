@@ -29,18 +29,44 @@ var sidebarView = {
             sidebarView.projectId = null;
             sidebarView.removeLinkFromCircuitBreakerHook();
         }
+
+        if (sidebarView.projectId === null) {
+            sidebarView.removeLinkFromWiringUpHook();
+            sidebarView.removeLinkFromReportingHook();
+        } else {
+            queryService.checkStatusQuery({parentid: requestObject.parentid, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
+        }
     }
-
-    , checkWhetherDevicesExist : function(){
-
+    , wiringStatusObserver : function(data){
+        if (data.hasDevicesAndFuses){
+            sidebarView.attachLinkToWiringUpHook();
+            sidebarView.attachLinkToReportingHook();
+        } else {
+            sidebarView.removeLinkFromWiringUpHook();
+            sidebarView.removeLinkFromWiringUpHook();
+        }
     }
-
-    , checkWhetherFusesExist : function(){
-
+    , attachLinkToReportingHook : function(){
+        $("#reportingHook").on("click", function(){
+            var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
+            switchView("pageShoppingList");
+            shoppinglistController.fetchData(projectsRequest);
+        });
+        $("#reportingHook").addClass("activeSidebarLink");
     }
-
-    , isReadyForWiring : function(){
-
+    , removeLinkFromReportingHook : function(){
+        $("#reportingHook").off("click");
+        $("#reportingHook").removeClass("activeSidebarLink");
+    }
+    , attachLinkToWiringUpHook : function(){
+        $("#wiringUpHook").on("click", function(){
+            queryService.loadNewView({action : "getlist" , listtype : "CIRCUIT_BREAKERS" , parentid : sidebarView.projectId});
+        });
+        $("#wiringUpHook").addClass("activeSidebarLink");
+    }
+    , removeLinkFromWiringUpHook : function(){
+        $("#wiringUpHook").off("click");
+        $("#wiringUpHook").removeClass("activeSidebarLink");
     }
     , attachLinkToCircuitBreakerHook : function(){
         $("#circuitBreakerHook").on("click", function(){
