@@ -1,9 +1,15 @@
 var shoppinglistView = {
     buildProjects: function (slItems) {
+        console.log(slItems);
         $.each(slItems, function (index, value) {
             var projectName = value;
-            var projectNameItem = "<tr itemId=" + value.id + "> <td>" + projectName + "</td></tr>";
+            var projectNameId = "projectName-" + index;
+            var projectNameItem = "<tr itemId=" + value.id + "> <td class='projectName'>" + projectName + "</td></tr>";
             $(".shoppingList").prepend(projectNameItem);
+        })
+        $(".projectName").click(function () {
+            var slRequest = { action: 'get-shoppinglist', parentid: '2' };
+            shoppinglistController.fetchShoppinglist(slRequest);
         })
     }
 }
