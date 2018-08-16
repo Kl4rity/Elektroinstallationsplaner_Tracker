@@ -45,6 +45,7 @@ var electroListHandler = {
         this.showStageTitle(listtype); 
 
         $("#shoppingListBtn").click(function () {
+            $(".shoppingList").empty();
             var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
             switchView("pageShoppingList");
             shoppinglistController.fetchData(projectsRequest);

@@ -26,12 +26,12 @@ var shoppinglistController = {
             dataType: "json",
             cache: false,
             success: function (data) {
-                console.log(data);
-                //shoppingListDevice = createShoppinglistDevice(data);
-                //shoppinglistView.buildShoppinglist(shoppingList);
+                shoppingListDevice = createShoppinglistDevice(data);
+                console.log(slDevice);
+                shoppinglistView.buildShoppinglist(slDevice);
             },
             error: function (data) {
-                console.log("shit aint happening" + data);
+                console.log("ERROR\n" + data);
             }
         });
     }

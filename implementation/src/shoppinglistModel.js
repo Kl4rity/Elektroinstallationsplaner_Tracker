@@ -1,18 +1,22 @@
 var createShoppinglistItem = function (data) {
     console.log(data);
     slItems = [];
+
     for (var i = 0; i < data.data.length; i++) {
-        var name = data.data[i].name;
-        slItems[i] = name;
+    item = { "name": data.data[i].name, "id": data.data[i].id }; 
+    slItems.push(item);
+    //    var name = data.data[i].name;
+    //    slItems[i] = name;
     };
     return slItems;
 }
 
 var createShoppinglistDevice = function (data) {
+    console.log(data);
     slDevice = [];
-    for (var i = 0; i < data.data.length; i++) {
-        var device = data.shoppinglist[i].devicename;
-        slDevice[i] = device;
+    for (var i = 0; i < data.shoppinglist.length; i++) {
+        item = { "name": data.shoppinglist[i].devicename, "count": data.shoppinglist[i].count, "sensor": data.shoppinglist[i].sensors}
+        slDevice.push(item);
     };
     return slDevice;
 }

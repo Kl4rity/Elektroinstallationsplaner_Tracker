@@ -1,15 +1,22 @@
 var shoppinglistView = {
     buildProjects: function (slItems) {
         console.log(slItems);
+
         $.each(slItems, function (index, value) {
-            var projectName = value;
-            var projectNameId = "projectName-" + index;
-            var projectNameItem = "<tr itemId=" + value.id + "> <td class='projectName'>" + projectName + "</td></tr>";
+            var projectNameItem = "<tr> <td class='projectName' id=" + value.id + ">" + value.name + "</td></tr>";
             $(".shoppingList").prepend(projectNameItem);
         })
-        $(".projectName").click(function () {
-            var slRequest = { action: 'get-shoppinglist', parentid: '2' };
+        $(".projectName").click(function (event) {
+            $(".shoppingListRow").empty();
+            var slRequest = { action: 'get-shoppinglist', parentid: event.target.id };
             shoppinglistController.fetchShoppinglist(slRequest);
+        })
+    }
+
+    , buildShoppinglist: function (slDevice) {
+        $.each(slDevice, function (index, value) {
+            var shoppinglistItem = "<tr> <td>" + value.name + "</td> <td>" + value.count + "</td> </tr>";
+            $(".shoppingListRow").prepend(shoppinglistItem);
         })
     }
 }
