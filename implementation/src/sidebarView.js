@@ -16,10 +16,12 @@ var sidebarView = {
         if (requestObject.listtype == "floors"){
             sidebarView.projectId = requestObject.parentid;
             sidebarView.attachLinkToCircuitBreakerHook();
+            sidebarView.attachLinkToPlanningHook();
         }
         if (requestObject.listtype == "projects"){
             sidebarView.projectId = null;
             sidebarView.removeLinkFromCircuitBreakerHook();
+            sidebarView.removeLinkFromPlanningHook();
         }
 
         if (sidebarView.projectId == null) {
@@ -37,6 +39,16 @@ var sidebarView = {
             sidebarView.removeLinkFromWiringUpHook();
             sidebarView.removeLinkFromWiringUpHook();
         }
+    }
+    , attachLinkToPlanningHook : function(){
+        $("#planningHook").on("click", function(){
+            queryService.loadNewView({ action: 'getlist', listtype: 'FLOORS', parentid: sidebarView.projectId });
+        });
+        $("#planningHook").addClass("activeSidebarLink");
+    }
+    , removeLinkFromPlanningHook : function(){
+        $("#planningHook").off("click");
+        $("#planningHook").removeClass("activeSidebarLink");
     }
     , attachLinkToReportingHook : function(){
         $("#reportingHook").on("click", function(){
