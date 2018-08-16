@@ -16,6 +16,7 @@ include "models/CircuitBreaker.php";
 include "models/Fuse.php";
 include "models/CircuitPlan.php";
 include "models/StatusQueries.php";
+include "models/WiringUp.php";
 
 define ("DBHost", "localhost");
 define ("DBName", "uebung3");

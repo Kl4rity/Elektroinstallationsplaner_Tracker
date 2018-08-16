@@ -1,7 +1,9 @@
 var electroListHandler = {
-    buildList: function (lsItems, listtype, parentid) {
+    buildList: function (lsItems, listtype, parentid, nextLevel) {
         $("#shoppingListBtn").unbind();
         $(".appendedRow").empty();
+
+        console.log(nextLevel);
 
         $(".appendedRow").attr("listtype", listtype);
         $(".appendedRow").attr("parentid", parentid);
@@ -26,7 +28,10 @@ var electroListHandler = {
                 $("#" + editButtonId).click(function () {
                     addDialogueView.editExistingEntryDialogue($(this));
                 });
-                $("#" + floorNameId).click(value.fetchChildren);
+                if(nextLevel != "NONE"){
+                    $("#" + floorNameId).click(value.fetchChildren);
+                    $("#" + floorNameId).addClass("clickable");
+                }
     
                 //Change Title of Project when ProjectName is clicked
                 $(".name").click(function () {

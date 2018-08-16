@@ -30,6 +30,7 @@ class ListController {
         "GET-SHOPPINGLIST"
         , "GET-CIRCUITPLAN"
         , "GET-WIRINGSTATUS"
+        , "GET-WIRINGDATA"
     ];
    
     public function __construct() {
@@ -69,7 +70,7 @@ class ListController {
     private function fetchResponsibleTableModelInstance($listtype){
         switch(strtoupper($listtype)):
             case "PROJECTS":
-                return new Project("projects", "NONE","floors");
+                return new Project("projects", "NONE","BREAK");
             case "FLOORS":
                 return new Floor("floors","projects_id", "rooms");
             case "ROOMS":
@@ -99,6 +100,8 @@ class ListController {
                 return new CircuitPlan();
             case "GET-WIRINGSTATUS":
                 return new ProjectStatus();
+            case "GET-WIRINGDATA":
+                return new WiringUp();
         endswitch;
     }
 }

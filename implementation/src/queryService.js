@@ -4,6 +4,13 @@ var queryService = {
     , loadNewView : function(requestObject){
         console.log(requestObject);
 
+        //Intercepting the fetchChildren Request when it comes from the projects page.
+        if(requestObject.sourceLevel){
+            if (requestObject.sourceLevel.toLowerCase() == "projects"){
+                sidebarView.setProjectsId(requestObject.parentid);
+            }
+        }
+
         //pass Data to SidebarView
         sidebarView.handleChangeOfView(requestObject);
 
@@ -20,9 +27,9 @@ var queryService = {
             success: function(data){
                 switchView("page1");
                 currentLevelElektroinstallationsItems = createElektroInstallationsItems(data);
-                electroListHandler.buildList(currentLevelElektroinstallationsItems, requestObject.listtype, requestObject.parentid);
+                electroListHandler.buildList(currentLevelElektroinstallationsItems, requestObject.listtype, requestObject.parentid, data.nextLevel);
                 addDialogueView.initDialogue(data.currentLevel.toLowerCase(), currentLevelElektroinstallationsItems);
-                sidebarView.highlightStage(currentLevelElektroinstallationsItems);
+                sidebarView.chooseStage(data.currentLevel);
             },
             error: function(data){
                 console.log("ERROR\n" + data);

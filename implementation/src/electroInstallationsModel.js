@@ -1,5 +1,7 @@
 var createElektroInstallationsItems = function (responseData){
         lsItems = [];
+        // Clean up potential fuse-list.
+        addDialogueView.fuses = [];
         if(responseData.data.length > 1){
             switch(responseData.currentLevel.toLowerCase()){
                 case "projects":
@@ -43,7 +45,21 @@ var createElektroInstallationsItems = function (responseData){
                         lsItems.push(new CircuitBreaker(listItem, responseData.currentLevel, responseData.nextLevel)); 
                     });
                     break;
-    
+                case "wiring":
+                    responseData.data.forEach(function(listItem){
+                        lsItems.push(new Loader(listItem, "devices", responseData.nextLevel)); 
+                    });
+                    
+                    // set Fuses for AddDialogueView
+                    if (responseData.fuses.length == 1){
+                        addDialogueView.fuses = new Fuse(responseData.fuses[0], responseData.currentLevel, responseData.nextLevel);
+                    } else {
+                        responseData.fuses.forEach(function(listItem){
+                            addDialogueView.fuses.push(new Fuse(listItem, responseData.currentLevel, responseData.nextLevel));
+                        });
+                    }
+
+                    break;
                 default:
                     console.log("ERROR: Listtype not known.");
                     return;
@@ -79,6 +95,18 @@ var createElektroInstallationsItems = function (responseData){
                 case "circuit_breakers":
                     lsItems.push(new CircuitBreaker(responseData.data[0], responseData.currentLevel, responseData.nextLevel)); 
                     break;
+
+                case "wiring":
+                        lsItems.push(new Loader(responseData.data[0], "devices", responseData.nextLevel));
+                        // set Fuses for AddDialogueView
+                        if (responseData.fuses.length == 1){
+                            addDialogueView.fuses = new Fuse(responseData.fuses[0], responseData.currentLevel, responseData.nextLevel);
+                        } else {
+                            responseData.fuses.forEach(function(listItem){
+                                addDialogueView.fuses.push(new Fuse(listItem, responseData.currentLevel, responseData.nextLevel));
+                            });
+                        }
+                    break;
     
                 default:
                     console.log("ERROR: Listtype not known.");
@@ -100,6 +128,7 @@ class electroInstallationItem {
 
         this.fetchChildrenPostRequest = {
             action : "getlist"
+            , sourceLevel : currentLevel
             , listtype : nextLevel
             , parentid : this.id
         }
@@ -161,6 +190,7 @@ class Loader extends electroInstallationItem {
         super(itemData, currentLevel, nextLevel);
 
         this.parentId = itemData.rooms_id;
+        this.fuse_id = itemData.fuses_id;
     }
 }
 

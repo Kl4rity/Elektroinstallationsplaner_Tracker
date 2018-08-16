@@ -8,6 +8,7 @@ var addDialogueView = {
     , dnParentIdContainer : null
     , dnUnitContainer : null
     , dnValueContainer : null
+    , dnFuseContainer : null
 
     // References Input-Fields
     , dnNameInput: null
@@ -15,6 +16,7 @@ var addDialogueView = {
     , dnParentIdInput: null
     , dnUnitInput: null
     , dnValueInput: null
+    , dnFuseInput: null
 
     // References PopupInfo
     , dnModalTitle : null
@@ -25,6 +27,8 @@ var addDialogueView = {
 
     , currentLevelElectroInstallationsItems : null
     , currentLevel : null
+
+    , fuses : []
 
     // Config objects
     , configProjects : {
@@ -57,6 +61,11 @@ var addDialogueView = {
         name: true
         , parentId : true
     }
+    , configWiring: {
+        name: true
+        , parentId : true
+        , fuse : true
+    }
     , initDialogue : function(currentLevel, currentLevelElectroInstallationsItems){
         addDialogueView.fetchNodeReferences();
         addDialogueView.currentLevel = currentLevel;
@@ -78,12 +87,14 @@ var addDialogueView = {
         addDialogueView.dnParentIdContainer = document.getElementById("AddEdit-ParentId-Container");
         addDialogueView.dnUnitContainer = document.getElementById("AddEdit-Unit-Container");
         addDialogueView.dnValueContainer = document.getElementById("AddEdit-Value-Container");
+        addDialogueView.dnFuseContainer = document.getElementById("AddEdit-Fuse-Container");
 
         addDialogueView.dnNameInput = document.getElementById("AddEdit-ItemName");
         addDialogueView.dnFloorCountFromBasementInput = document.getElementById("AddEdit-FloorCountFromBasement");
         addDialogueView.dnParentIdInput = document.getElementById("AddEdit-ParentId");
         addDialogueView.dnUnitInput = document.getElementById("AddEdit-Unit");
         addDialogueView.dnValueInput = document.getElementById("AddEdit-Value");
+        addDialogueView.dnFuseInput = document.getElementById("AddEdit-Fuse");
 
         addDialogueView.dnSubmitButton = document.getElementById("AddEdit-Submit");
         addDialogueView.dnAddItemButton = document.getElementById("addItem");
@@ -110,6 +121,9 @@ var addDialogueView = {
         if (!config.value){
             addDialogueView.dnValueContainer.classList.add("invisible");
         }
+        if(!config.fuse){
+            addDialogueView.dnFuseContainer.classList.add("invisible");
+        }
     }
     , resetFieldVisibility : function (){
         if(addDialogueView.dnNameContainer.classList.contains("invisible")){
@@ -127,16 +141,23 @@ var addDialogueView = {
         if(addDialogueView.dnValueContainer.classList.contains("invisible")){
             addDialogueView.dnValueContainer.classList.remove("invisible");
         }
+        if(addDialogueView.dnFuseContainer.classList.contains("invisible")){
+            addDialogueView.dnFuseContainer.classList.remove("invisible");
+        }
     }
     , clearFormFields : function(){
         addDialogueView.setFormFields();
     }
     , setFormFields : function(modelItem){
+        if (addDialogueView.fuses){
+            addDialogueView.buildFuseList();
+        }
         addDialogueView.dnNameInput.value = (typeof modelItem !== 'undefined') ? modelItem.name : "";
         addDialogueView.dnFloorCountFromBasementInput.value = (typeof modelItem !== 'undefined') ? modelItem.floorCountFromBasement : "";
         addDialogueView.dnParentIdInput.value = (typeof modelItem !== 'undefined') ? modelItem.parentId : "";
         addDialogueView.dnUnitInput.value = (typeof modelItem !== 'undefined') ? modelItem.unit : "";
         addDialogueView.dnValueInput.value = (typeof modelItem !== 'undefined') ? modelItem.value : "";
+        addDialogueView.dnFuseInput.value = (typeof modelItem !== 'undefined') ? modelItem.fuse_id : "";
     }
     , fetchSpecificationData : function(){
         config = this.getConfig(addDialogueView.currentLevel);
@@ -163,6 +184,9 @@ var addDialogueView = {
         if (config.value){
             returnObject.specification.value = addDialogueView.dnValueInput.value;
         };
+        if(config.fuse){
+            returnObject.specification.fuse_id = addDialogueView.dnFuseInput.value;
+        }
 
         return returnObject;
     }
@@ -182,6 +206,8 @@ var addDialogueView = {
                 return addDialogueView.configFuses;
             case "circuit_breakers":
                 return addDialogueView.configCicuitBreakers;
+            case "wiring":
+                return addDialogueView.configWiring;
             default:
                 console.log("Listtype unknown - no Add-Dialogue config available.");
                 return;
@@ -247,5 +273,31 @@ var addDialogueView = {
             onButtonClicked();
             addDialogueView.dnFullAddEditModalContainer.modal("hide");
         });
+    }
+    , buildFuseList : function(){
+        console.log(addDialogueView.fuses.length); 
+        console.log(addDialogueView.dnFuseInput);
+
+        if(!addDialogueView.fuses.length){
+            addDialogueView.clearOptionsFromSelect();
+            let newElement = document.createElement("option");
+            newElement.innerHTML = addDialogueView.fuses.name;
+            newElement.value = addDialogueView.fuses.id;
+            console.log(newElement);
+            addDialogueView.dnFuseInput.appendChild(newElement);
+        } else {
+            addDialogueView.clearOptionsFromSelect();
+            addDialogueView.fuses.forEach(function(fuse){
+                let newElement = document.createElement("option");
+                newElement.innerHTML = fuse.name;
+                newElement.value = fuse.id;
+                addDialogueView.dnFuseInput.appendChild(newElement);
+            });
+        }
+    }
+    , clearOptionsFromSelect : function(){
+        while (addDialogueView.dnFuseInput.firstChild) {
+            addDialogueView.dnFuseInput.removeChild(addDialogueView.dnFuseInput.firstChild);
+        }
     }
 }

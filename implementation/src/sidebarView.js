@@ -1,16 +1,8 @@
 var sidebarView = {
     projectId : null
 
-    , highlightStage: function (lsItems) {
-        $.each(lsItems, function (index, value) {
-            stageName = value.constructor.name;
-            console.log(stageName);
-        })
-        this.chooseStage(stageName);
-    }
-
     , chooseStage: function (stageName) {
-        var stages = ["Floor", "Room", "Loader", "Sensor", "CircuitBreaker", "Fuse", "Wiring"];
+        var stages = ["projects", "floors", "rooms", "devices", "sensors", "circuit_breakers", "fuses", "wiring"];
         for (i = 0; i < stages.length; i++) {
             if (stageName == stages[i]) {
                 $("." + stageName).addClass("currentlyActiveElement");
@@ -21,30 +13,37 @@ var sidebarView = {
     }
 
     , handleChangeOfView : function(requestObject){
-        if (requestObject.listtype == "floors"){
-            sidebarView.projectId = requestObject.parentid;
-            sidebarView.attachLinkToCircuitBreakerHook();
-        }
         if (requestObject.listtype == "projects"){
             sidebarView.projectId = null;
-            sidebarView.removeLinkFromCircuitBreakerHook();
+            sidebarView.removeLinksNeedingProjectId();
         }
 
-        if (sidebarView.projectId === null) {
-            sidebarView.removeLinkFromWiringUpHook();
-            sidebarView.removeLinkFromReportingHook();
+        if (sidebarView.projectId == null) {
+            sidebarView.removeLinksNeedingDevicesAndFuses();
         } else {
-            queryService.checkStatusQuery({parentid: requestObject.parentid, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
+            sidebarView.setLinksNeedingProjectId();
+            queryService.checkStatusQuery({parentid: sidebarView.projectId, action: "get-wiringstatus", successFunction: sidebarView.wiringStatusObserver});
         }
+    }
+    , setProjectsId(id){
+        sidebarView.projectId = id;
     }
     , wiringStatusObserver : function(data){
         if (data.hasDevicesAndFuses){
-            sidebarView.attachLinkToWiringUpHook();
-            sidebarView.attachLinkToReportingHook();
+            sidebarView.setLinksNeedingDevicesAndFuses();
         } else {
-            sidebarView.removeLinkFromWiringUpHook();
-            sidebarView.removeLinkFromWiringUpHook();
+            sidebarView.removeLinksNeedingDevicesAndFuses();
         }
+    }
+    , attachLinkToPlanningHook : function(){
+        $("#planningHook").on("click", function(){
+            queryService.loadNewView({ action: 'getlist', listtype: 'FLOORS', parentid: sidebarView.projectId });
+        });
+        $("#planningHook").addClass("activeSidebarLink");
+    }
+    , removeLinkFromPlanningHook : function(){
+        $("#planningHook").off("click");
+        $("#planningHook").removeClass("activeSidebarLink");
     }
     , attachLinkToReportingHook : function(){
         $("#reportingHook").on("click", function(){
@@ -60,7 +59,7 @@ var sidebarView = {
     }
     , attachLinkToWiringUpHook : function(){
         $("#wiringUpHook").on("click", function(){
-            queryService.loadNewView({action : "getlist" , listtype : "CIRCUIT_BREAKERS" , parentid : sidebarView.projectId});
+            queryService.loadNewView({action : "get-wiringdata" , listtype : "Wiring" , parentid : sidebarView.projectId});
         });
         $("#wiringUpHook").addClass("activeSidebarLink");
     }
@@ -77,5 +76,21 @@ var sidebarView = {
     , removeLinkFromCircuitBreakerHook : function(){
         $("#circuitBreakerHook").off("click");
         $("#circuitBreakerHook").removeClass("activeSidebarLink");
+    }
+    , setLinksNeedingProjectId : function(){
+        sidebarView.attachLinkToCircuitBreakerHook();
+        sidebarView.attachLinkToPlanningHook();
+    }
+    , removeLinksNeedingProjectId : function (){
+        sidebarView.removeLinkFromCircuitBreakerHook();
+        sidebarView.removeLinkFromPlanningHook();
+    }
+    , setLinksNeedingDevicesAndFuses : function(){
+        sidebarView.attachLinkToWiringUpHook();
+        sidebarView.attachLinkToReportingHook();
+    }
+    , removeLinksNeedingDevicesAndFuses : function(){
+        sidebarView.removeLinkFromWiringUpHook();
+        sidebarView.removeLinkFromReportingHook();
     }
 }
