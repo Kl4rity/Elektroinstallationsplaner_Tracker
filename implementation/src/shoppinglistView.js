@@ -8,7 +8,7 @@ var shoppinglistView = {
             $(".shoppingList").prepend(projectNameItem);
         })
         $(".projectName").click(function () {
-            var slRequest = { action: 'get-shoppinglist', parentid: 1 };
+            var slRequest = { action: 'get-shoppinglist', parentid: '2' };
             shoppinglistController.fetchShoppinglist(slRequest);
         })
     }
