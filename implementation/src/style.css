@@ -130,11 +130,7 @@
     padding-right: 5px;
     font-size: small;
     box-shadow: 0px 0px 0px black;
-    width: 220px;
-}
-
-.circuitBtn{
-    width: 220px;
+    width: 100%;
 }
 
 .invisible {
@@ -159,7 +155,7 @@
     cursor: pointer;
 }
 
-.shoppingList tr > td:first-child:hover {
+.shoppingList tr > td:first-child:hover, .wiringList tr > td:first-child:hover {
     font-weight: bold;
     cursor: pointer;
 }
@@ -193,3 +189,12 @@
     background: white; 
     color: rgb(124, 198, 214);
 }
+
+.cbTitle, .tableHeadWiring, .tableHeadSensors{
+    text-align: center;
+}
+
+.fuseData {
+    background-color: rgba(124, 198, 214, 0.4);
+}
+

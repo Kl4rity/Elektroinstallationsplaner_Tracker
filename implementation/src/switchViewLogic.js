@@ -1,4 +1,4 @@
-var views = ["page1", "pageShoppingList"]
+var views = ["page1", "pageShoppingList", "pageWiring"]
 
 var switchView = function switchView(newView) {
     for (i = 0; i < views.length; i++) {

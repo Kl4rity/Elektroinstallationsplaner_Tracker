@@ -1,6 +1,7 @@
 var electroListHandler = {
     buildList: function (lsItems, listtype, parentid, nextLevel) {
         $("#shoppingListBtn").unbind();
+        $("#wiringBtn").unbind();
         $(".appendedRow").empty();
 
         console.log(nextLevel);
@@ -51,9 +52,19 @@ var electroListHandler = {
 
         $("#shoppingListBtn").click(function () {
             $(".shoppingList").empty();
+            $(".shoppingListData").empty();
+            $(".shoppingListHeader").empty();
             var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
             switchView("pageShoppingList");
             shoppinglistController.fetchData(projectsRequest);
+        });
+
+        $("#wiringBtn").click(function () {
+            $('.wiringList').empty();
+            $('.singleWiringDiv').empty();
+            var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
+            switchView("pageWiring");
+            wiringController.fetchData(projectsRequest);
         });
     }
     , createItem: function () {

@@ -1,35 +1,35 @@
-
-var shoppinglistController = {
+var wiringController = {
     backendAddress: "http://localhost/Semester2Project/Elektroinstallationsplaner_Tracker/implementation/backend/index.php"
     , fetchData: function (projectsRequest) {
         $.ajax({
-            url: shoppinglistController.backendAddress,
+            url: wiringController.backendAddress,
             type: "post",
             data: { data: JSON.stringify(projectsRequest) },
             dataType: "json",
             cache: false,
             success: function (data) {
-                slItems = createShoppinglistItem(data);
-                shoppinglistView.buildProjects(slItems);
+                wlItems = createWiringlistItem(data);
+                wiringView.buildProjects(wlItems);
+                console.log(data);
             },
             error: function (data) {
                 console.log("ERROR\n" + data);
             }
         });
     }
-
-    , fetchShoppinglist: function (slRequest) {
+    , fetchWiringlist: function (wlRequest) {
         $.ajax({
             url: shoppinglistController.backendAddress,
             type: "post",
-            data: { data: JSON.stringify(slRequest) },
+            data: { data: JSON.stringify(wlRequest) },
             dataType: "json",
             cache: false,
-            success: function (data) {
+            success: function (data) {          
                 console.log(data);
-                shoppingListDevice = createShoppinglistDevice(data);
-                console.log(slDevice);
-                shoppinglistView.buildShoppinglist(slDevice);
+                cbName = createCbName(data);
+                console.log(cbName);
+                wiringView.buildWiringlist(cbName);
+
             },
             error: function (data) {
                 console.log("ERROR\n" + data);
