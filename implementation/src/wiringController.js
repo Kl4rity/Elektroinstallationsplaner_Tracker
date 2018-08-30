@@ -10,7 +10,6 @@ var wiringController = {
             success: function (data) {
                 wlItems = createWiringlistItem(data);
                 wiringView.buildProjects(wlItems);
-                console.log(data);
             },
             error: function (data) {
                 console.log("ERROR\n" + data);
@@ -25,9 +24,7 @@ var wiringController = {
             dataType: "json",
             cache: false,
             success: function (data) {          
-                console.log(data);
                 cbName = createCbName(data);
-                console.log(cbName);
                 wiringView.buildWiringlist(cbName);
 
             },

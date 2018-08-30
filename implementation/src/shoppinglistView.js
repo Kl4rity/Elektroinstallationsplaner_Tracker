@@ -1,7 +1,6 @@
 var shoppinglistView = {
     buildProjects: function (slItems) {
-        console.log(slItems);
-
+       
         $.each(slItems, function (index, value) {
             var projectNameItem = "<tr> <td class='projectName' id=" + value.id + ">" + value.name + "</td></tr>";
             $(".shoppingList").prepend(projectNameItem);
@@ -25,10 +24,9 @@ var shoppinglistView = {
 
     , buildShoppinglist: function (slDevice) {
         var idCount = 0;
-        var rowCount = 0;
-        console.log(slDevice);
+        var rowCount = 0;    
         $.each(slDevice, function (index, value) {
-            var shoppinglistItem = "<tr class='shoppingDevices-" + idCount +"'> <td>" + value.name + "</td> <td>" + value.count + "</td> </tr>";
+            var shoppinglistItem = "<tr class='shoppingDevices-" + idCount + "'> <td class='tdValue'>" + value.name + "</td> <td>" + value.count + "</td> </tr>";
             idCount++;
             $(".shoppingListRow").prepend(shoppinglistItem);
         })
@@ -36,7 +34,6 @@ var shoppinglistView = {
         //add sensors to shopping list
         for (var i = 0; i < slDevice.length; i++) {
             $.each(slDevice[i].sensor, function (index, value) {
-                console.log(value);
                 var sensor = "<td class='sensorData'>" + value.name + "</td>";
                 $(".shoppingDevices-" + i).append(sensor);
             })

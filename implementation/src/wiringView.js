@@ -2,7 +2,6 @@ var wiringView = {
 
     //build Projects to choose WiringList from
     buildProjects: function (wlItems) {
-        console.log(wlItems);
 
         $.each(wlItems, function (index, value) {
             var projectNameItem = "<tr> <td class='wiringProjectName' id=" + value.id + ">" + value.name + "</td></tr>";
@@ -45,7 +44,6 @@ var wiringView = {
         //add devices to wiring list
         for (var i = 0; i < cbName.length; i++) {
             var fuses = cbName[i].fuses;
-            console.log(fuses);
             for (var j = 0; j < fuses.length; j++) {
                 $.each(fuses[j].devices, function (index, value) {
                     var device = "<td>" + value.name + "</td>";

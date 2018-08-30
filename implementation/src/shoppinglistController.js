@@ -26,9 +26,7 @@ var shoppinglistController = {
             dataType: "json",
             cache: false,
             success: function (data) {
-                console.log(data);
                 shoppingListDevice = createShoppinglistDevice(data);
-                console.log(slDevice);
                 shoppinglistView.buildShoppinglist(slDevice);
             },
             error: function (data) {
