@@ -82,7 +82,7 @@
 }
 
 .navigation button {
-    color: rgb(226, 226, 226);
+    margin-bottom: 8px;
 }
 
 .list-group-item.active {
@@ -198,3 +198,7 @@
     background-color: rgba(124, 198, 214, 0.4);
 }
 
+#reportingHook {
+    color: white;
+    
+}

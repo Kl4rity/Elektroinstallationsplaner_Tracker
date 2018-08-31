@@ -45,18 +45,6 @@ var sidebarView = {
         $("#planningHook").off("click");
         $("#planningHook").removeClass("activeSidebarLink");
     }
-    , attachLinkToReportingHook : function(){
-        $("#reportingHook").on("click", function(){
-            var projectsRequest = { action: 'getlist', listtype: 'PROJECTS', parentid: '1' };
-            switchView("pageShoppingList");
-            shoppinglistController.fetchData(projectsRequest);
-        });
-        $("#reportingHook").addClass("activeSidebarLink");
-    }
-    , removeLinkFromReportingHook : function(){
-        $("#reportingHook").off("click");
-        $("#reportingHook").removeClass("activeSidebarLink");
-    }
     , attachLinkToWiringUpHook : function(){
         $("#wiringUpHook").on("click", function(){
             queryService.loadNewView({action : "get-wiringdata" , listtype : "Wiring" , parentid : sidebarView.projectId});
@@ -87,10 +75,8 @@ var sidebarView = {
     }
     , setLinksNeedingDevicesAndFuses : function(){
         sidebarView.attachLinkToWiringUpHook();
-        sidebarView.attachLinkToReportingHook();
     }
     , removeLinksNeedingDevicesAndFuses : function(){
         sidebarView.removeLinkFromWiringUpHook();
-        sidebarView.removeLinkFromReportingHook();
     }
 }
