@@ -26,7 +26,7 @@ var wiringView = {
         var rowCountDevice = 0;
         $.each(cbName, function (index, value) {
             var cbHeader = value.name;
-            var wiringList = "<div class='singleWiringDiv'><h4 class='cbTitle'>Name of Circuit Breaker: " + cbHeader + "</h4> <table class='table table-bordered'>"
+            var wiringList = "<div class='singleWiringDiv'><h4 class='cbTitle'>Circuit Breaker: " + cbHeader + "</h4> <table class='table table-bordered'>"
                 + "<thead class='table-head wiringFuses-" + idCount + "'><tr><th class='tableHeadWiring'> Fuses </th><th colspan='20' class='tableHeadWiring devicesHead' >Devices</th></tr></thead><tbody class='wiringDevices-" + idCount + "'></tbody></table></div>";
             idCount++;
             $(".outsideCircuitDiv").prepend(wiringList);
