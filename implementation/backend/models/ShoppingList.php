@@ -50,6 +50,7 @@ class ShoppingList implements iPostRequestExecutor {
         
         //Build the shopping list
         $devicesWithSensorsUncounted = $this->assignSensorsToDevices($devices, $sensors);
+        // var_dump($devicesWithSensorsUncounted);
         $shoppingList = $this->collapseDuplicateShoppingListItems($devicesWithSensorsUncounted);
         
         //Add it to the response
@@ -75,18 +76,23 @@ class ShoppingList implements iPostRequestExecutor {
     
     private function collapseDuplicateShoppingListItems($shoppingList){
         $i=0;
+        $countedList = array();
         while($i < count($shoppingList)){
+            $counter = 1;
             $c = $i+1;
             while($c < count($shoppingList)){
-                if(empty(array_diff($shoppingList[$i], $shoppingList[$c]))){
-                    $shoppingList[$i]["count"] += 1;
+                if(empty(array_diff($shoppingList[$i], $shoppingList[$c])) && empty(array_diff($shoppingList[$i]["sensors"], $shoppingList[$c]["sensors"]))){
+                    $counter = $counter + 1;
                     $removed_elements = array_splice($shoppingList, $c, 1);
+                } else {
+                    $c++;
                 }
-                $c++;
             }
+            $shoppingList[$i]["count"] = $counter;
+            $countedList[] = $shoppingList[$i];
             $i++;
         }
-        return $shoppingList;
+        return $countedList;
     }
     
     private function getSensorListForDevice($device, $sensors){
